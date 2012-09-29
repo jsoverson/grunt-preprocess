@@ -25,21 +25,21 @@ var defaults = {
 var delim = {
   html : {
     exclude : {
-      start : "<!--[ \t]*exclude[ \t]+([^\n]+)[ \t]*-->",
+      start : "<!--[ \t]*exclude[ \t]*([^\n]*)[ \t]*-->",
       end   : "<!--[ \t]*endexclude[ \t]*-->"
     },
     include : {
-      start : "<!--[ \t]*include[ \t]+([^\n]+)[ \t]*-->",
+      start : "<!--[ \t]*include[ \t]*([^\n]*)[ \t]*-->",
       end   : "<!--[ \t]*endinclude[ \t]*-->"
     }
   },
   js : {
     exclude : {
-      start : "//[ \t]*exclude[ \t]+([^\n]+)[ \t]*",
+      start : "//[ \t]*exclude[ \t]*([^\n]*)[ \t]*",
       end   : "//[ \t]*endexclude[ \t]*"
     },
     include : {
-      start : "//[ \t]*include[ \t]+([^\n]+)[ \t]*",
+      start : "//[ \t]*include[ \t]*([^\n]*)[ \t]*",
       end   : "//[ \t]*endinclude[ \t]*"
     }
   }
@@ -109,6 +109,7 @@ function getRegex(type, def) {
 }
 
 function getTestTemplate(test) {
+  test = test || 'true';
   test = test.replace(/([^=])=([^=])/g, '$1==$2');
   return '<% if ('+test+') { %>true<% }else{ %>false<% } %>'
 }
