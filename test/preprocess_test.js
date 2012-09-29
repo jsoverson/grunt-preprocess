@@ -142,6 +142,24 @@ exports['preprocess'] = {
 
     test.done();
   },
+  'simple preprocess same line': function(test) {
+    test.expect(2);
+
+    // tests here
+
+    var input,expected,settings;
+
+    input = "a<!-- exclude -->b<!-- endexclude -->c";
+    expected = "ac";
+    test.equal(task.preprocess(input, { env: 'production'}), expected, 'Should exclude generic');
+
+
+    input = "a<!-- include -->b<!-- endinclude -->c";
+    expected = "abc";
+    test.equal(task.preprocess(input, { env: 'production'}), expected, 'Should include generic');
+
+    test.done();
+  },
   'force at least double equals': function(test) {
     test.expect(1);
 
