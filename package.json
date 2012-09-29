@@ -1,0 +1,47 @@
+{
+  "name": "grunt-preprocess",
+  "description": "Preprocess files based off environment configuration",
+  "version": "0.1.0",
+  "homepage": "https://github.com/onehealth/grunt-preprocess",
+  "author": {
+    "name": "Jarrod Overson",
+    "email": "jsoverson@gmail.com",
+    "url": "http://jarrodoverson.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/onehealth/grunt-preprocess.git"
+  },
+  "bugs": {
+    "url": "https://github.com/onehealth/grunt-preprocess/issues"
+  },
+  "licenses": [
+    {
+      "type": "Apache",
+      "url": "https://github.com/onehealth/grunt-preprocess/blob/master/LICENSE"
+    }
+  ],
+  "main": "Gruntfile.js",
+  "bin": "bin/grunt-preprocess",
+  "engines": {
+    "node": ">= 0.6.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "dependencies": {
+    "grunt": "~0.3.15"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.0a"
+  },
+  "keywords": [
+    "gruntplugin",
+    "environment",
+    "include",
+    "exclude",
+    "process",
+    "preprocess",
+    "pragma"
+  ]
+}
