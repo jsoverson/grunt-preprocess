@@ -5,7 +5,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     test: {
-      files: ['test/**/*.js']
+      files: ['test/**/*_test.js']
     },
     lint: {
       files: ['Gruntfile.js', 'tasks/**/*.js', 'test/**/*.js']
