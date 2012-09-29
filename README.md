@@ -32,7 +32,31 @@ preprocess : {
 
 ## Directive syntax
 
-### HTML Syntax
+### Simple syntax
+
+The most basic usage is for files that only have two states, in development and
+production. In this case, your directives for exclude are removed after preprocessing
+
+```html
+<body>
+    <!-- exclude -->
+    <header>Your on dev!</header>
+    <!-- endexclude -->
+</body>
+```
+
+After build
+
+```html
+<body>
+</body>
+```
+
+### Extended html Syntax
+
+This is useful for more fine grained control of your files over multiple
+environments (set via the NODE_ENV environment variable).
+
 ```html
 <body>
     <!-- exclude env='production' -->
@@ -42,7 +66,7 @@ preprocess : {
     <!-- include env='production' -->
     <script src="some/production/javascript.js"></script>
     <!-- endinclude -->
-</head>
+</body>
 ```
 
 With a NODE_ENV set to 'production' this will be built to look like
@@ -50,7 +74,7 @@ With a NODE_ENV set to 'production' this will be built to look like
 ```html
 <body>
     <script src="some/production/javascript.js"></script>
-</head>
+</body>
 ```
 
 With NODE_ENV not set or set to dev, the built file will be
@@ -58,11 +82,13 @@ With NODE_ENV not set or set to dev, the built file will be
 ```html
 <body>
     <header>Your on dev!</header>
-</head>
+</body>
 ```
 
 
 ### JavaScript Syntax
+
+Extended syntax below, but will work without specifying a test
 
 ```js
 normalFunction();
