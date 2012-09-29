@@ -50,7 +50,7 @@ function init(grunt) {
   grunt.registerMultiTask('preprocess', 'Preprocess files based off environment configuration', function() {
 
     var context = {
-      env : process.env.NODE_ENV || 'dev'
+      env : process.env.NODE_ENV || 'development'
     };
 
     if (this.data.files) {
