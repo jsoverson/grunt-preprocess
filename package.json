@@ -1,6 +1,6 @@
 {
   "name": "grunt-preprocess",
-  "description": "Preprocess files based off environment configuration",
+  "description": "Preprocess HTML and JavaScript directives based off environment configuration",
   "version": "0.2.0",
   "homepage": "https://github.com/onehealth/grunt-preprocess",
   "author": {
