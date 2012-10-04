@@ -73,7 +73,7 @@ exports['preprocess'] = {
     test.done();
   },
   'preprocess javascript': function(test) {
-    test.expect(4);
+    test.expect(5);
 
     // tests here
 
@@ -111,6 +111,10 @@ exports['preprocess'] = {
       "// endinclude\n" +
       "c";
     expected = "a\n\nc";
+    test.equal(task.preprocess(input, { NODE_ENV: 'dev'}, 'js'), expected, 'Should not include if not match');
+
+    input = "a/* include NODE_ENV=='production' */b/* endinclude */c";
+    expected = "ac";
     test.equal(task.preprocess(input, { NODE_ENV: 'dev'}, 'js'), expected, 'Should not include if not match');
 
     test.done();
