@@ -3,7 +3,7 @@
 define([], function () {
   "use strict";
 
-  //exclude env='production'
+  //exclude NODE_ENV='production'
   superExpensiveFunction()
   //endexclude
 
