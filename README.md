@@ -1,6 +1,6 @@
 # grunt-preprocess
 
-Preprocess files based off environment configuration
+Preprocess HTML and JavaScript with directives based off ENV configuration
 
 ## Getting Started
 Install this grunt plugin next to your project's [Gruntfile][getting_started] with: `npm install grunt-preprocess`
@@ -34,8 +34,8 @@ preprocess : {
 
 ### Simple syntax
 
-The most basic usage is for files that only have two states, in development and
-production. In this case, your directives for exclude are removed after preprocessing
+The most basic usage is for files that only have two states, non-processed and processed.
+In this case, your directives for exclude are removed after the `preprocess` task
 
 ```html
 <body>
@@ -52,36 +52,59 @@ After build
 </body>
 ```
 
+### Extended directives
+
+ - include VAR='value' / endinclude
+   This will include the enclosed block if your test passes
+ - exclude VAR='value' / endexclude
+   This will remove the enclosed block if your test passes
+ - insert VAR
+   This will include the environment variable VAR into your source
+
 ### Extended html Syntax
 
 This is useful for more fine grained control of your files over multiple
-environments (set via the NODE_ENV environment variable).
+environment configurations. You have access to simple tests of any ENV variable
 
 ```html
 <body>
-    <!-- exclude env='production' -->
+    <!-- exclude NODE_ENV='production' -->
     <header>Your on dev!</header>
     <!-- endexclude -->
 
-    <!-- include env='production' -->
+    <!-- include NODE_ENV='production' -->
     <script src="some/production/javascript.js"></script>
     <!-- endinclude -->
+
+    <script>
+    var fingerprint = '<!-- insert COMMIT_HASH -->' || 'DEFAULT';
+    </script>
 </body>
 ```
 
-With a NODE_ENV set to 'production' this will be built to look like
+With a `NODE_ENV` set to `production` and `0xDEADBEEF` in
+`COMMIT_HASH` this will be built to look like
 
 ```html
 <body>
     <script src="some/production/javascript.js"></script>
+
+    <script>
+    var fingerprint = '0xDEADBEEF' || 'DEFAULT';
+    </script>
 </body>
 ```
 
-With NODE_ENV not set or set to dev, the built file will be
+With NODE_ENV not set or set to dev and nothing in COMMIT_HASH,
+the built file will be
 
 ```html
 <body>
     <header>Your on dev!</header>
+
+    <script>
+    var fingerprint = '' || 'DEFAULT';
+    </script>
 </body>
 ```
 
@@ -92,7 +115,7 @@ Extended syntax below, but will work without specifying a test
 
 ```js
 normalFunction();
-//exclude env='production'
+//exclude NODE_ENV='production'
 superExpensiveDebugFunction()
 //endexclude
 
@@ -116,6 +139,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+ - 0.3.0 Added insert, extended context to all environment
  - 0.2.0 Added simple directive syntax
  - 0.1.0 Initial release
 
