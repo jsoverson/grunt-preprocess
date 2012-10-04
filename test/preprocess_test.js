@@ -37,38 +37,38 @@ exports['preprocess'] = {
     var input,expected,settings;
 
     input = "a\n" +
-      "<!-- exclude env=='production' -->\n" +
+      "<!-- exclude NODE_ENV=='production' -->\n" +
       "b\n" +
       "<!-- endexclude -->\n" +
       "c";
     expected = "a\n\nc";
-    test.equal(task.preprocess(input, { env: 'production'}), expected, 'Should exclude if match');
+    test.equal(task.preprocess(input, { NODE_ENV: 'production'}), expected, 'Should exclude if match');
 
 
     input = "a\n" +
-      "<!-- exclude env=='production' -->\n" +
+      "<!-- exclude NODE_ENV=='production' -->\n" +
       "b\n" +
       "<!-- endexclude -->\n" +
       "c";
     expected = "a\n\nb\n\nc";
-    test.equal(task.preprocess(input, { env: 'dev'}), expected, 'Should not exclude if not match');
+    test.equal(task.preprocess(input, { NODE_ENV: 'dev'}), expected, 'Should not exclude if not match');
 
     input = "a\n" +
-      "<!-- include env=='production' -->\n" +
+      "<!-- include NODE_ENV=='production' -->\n" +
       "b\n" +
       "<!-- endinclude -->\n" +
       "c";
     expected = "a\n\nb\n\nc";
-    test.equal(task.preprocess(input, { env: 'production'}), expected, 'Should include if match');
+    test.equal(task.preprocess(input, { NODE_ENV: 'production'}), expected, 'Should include if match');
 
 
     input = "a\n" +
-      "<!-- include env=='production' -->\n" +
+      "<!-- include NODE_ENV=='production' -->\n" +
       "b\n" +
       "<!-- endinclude -->\n" +
       "c";
     expected = "a\n\nc";
-    test.equal(task.preprocess(input, { env: 'dev'}), expected, 'Should not include if not match');
+    test.equal(task.preprocess(input, { NODE_ENV: 'dev'}), expected, 'Should not include if not match');
 
     test.done();
   },
@@ -80,38 +80,38 @@ exports['preprocess'] = {
     var input,expected,settings;
 
     input = "a\n" +
-      "// exclude env=='production'\n" +
+      "// exclude NODE_ENV=='production'\n" +
       "b\n" +
       "// endexclude  \n" +
       "c";
     expected = "a\n\nc";
-    test.equal(task.preprocess(input, { env: 'production'}, 'js'), expected, 'Should exclude if match');
+    test.equal(task.preprocess(input, { NODE_ENV: 'production'}, 'js'), expected, 'Should exclude if match');
 
 
     input = "a\n" +
-      "// exclude env=='production' \n" +
+      "// exclude NODE_ENV=='production' \n" +
       "b\n" +
       "// endexclude \n" +
       "c";
     expected = "a\n\nb\n\nc";
-    test.equal(task.preprocess(input, { env: 'dev'}, 'js'), expected, 'Should not exclude if not match');
+    test.equal(task.preprocess(input, { NODE_ENV: 'dev'}, 'js'), expected, 'Should not exclude if not match');
 
     input = "a\n" +
-      "// include env=='production'\n" +
+      "// include NODE_ENV=='production'\n" +
       "b\n" +
       "// endinclude\n" +
       "c";
     expected = "a\n\nb\n\nc";
-    test.equal(task.preprocess(input, { env: 'production'}, 'js'), expected, 'Should include if match');
+    test.equal(task.preprocess(input, { NODE_ENV: 'production'}, 'js'), expected, 'Should include if match');
 
 
     input = "a\n" +
-      "// include env=='production'\n" +
+      "// include NODE_ENV=='production'\n" +
       "b\n" +
       "// endinclude\n" +
       "c";
     expected = "a\n\nc";
-    test.equal(task.preprocess(input, { env: 'dev'}, 'js'), expected, 'Should not include if not match');
+    test.equal(task.preprocess(input, { NODE_ENV: 'dev'}, 'js'), expected, 'Should not include if not match');
 
     test.done();
   },
@@ -122,23 +122,23 @@ exports['preprocess'] = {
 
     var input,expected,settings;
 
-    input = "a<!-- exclude env=='production' -->b<!-- endexclude -->c";
+    input = "a<!-- exclude NODE_ENV=='production' -->b<!-- endexclude -->c";
     expected = "ac";
-    test.equal(task.preprocess(input, { env: 'production'}), expected, 'Should exclude if match');
+    test.equal(task.preprocess(input, { NODE_ENV: 'production'}), expected, 'Should exclude if match');
 
 
-    input = "a<!-- exclude env=='production' -->b<!-- endexclude -->c";
+    input = "a<!-- exclude NODE_ENV=='production' -->b<!-- endexclude -->c";
     expected = "abc";
-    test.equal(task.preprocess(input, { env: 'dev'}), expected, 'Should not exclude if not match');
+    test.equal(task.preprocess(input, { NODE_ENV: 'dev'}), expected, 'Should not exclude if not match');
 
-    input = "a<!-- include env=='production' -->b<!-- endinclude -->c";
+    input = "a<!-- include NODE_ENV=='production' -->b<!-- endinclude -->c";
     expected = "abc";
-    test.equal(task.preprocess(input, { env: 'production'}), expected, 'Should include if match');
+    test.equal(task.preprocess(input, { NODE_ENV: 'production'}), expected, 'Should include if match');
 
 
-    input = "a<!-- include env=='production' -->b<!-- endinclude -->c";
+    input = "a<!-- include NODE_ENV=='production' -->b<!-- endinclude -->c";
     expected = "ac";
-    test.equal(task.preprocess(input, { env: 'dev'}), expected, 'Should not include if not match');
+    test.equal(task.preprocess(input, { NODE_ENV: 'dev'}), expected, 'Should not include if not match');
 
     test.done();
   },
@@ -151,12 +151,12 @@ exports['preprocess'] = {
 
     input = "a<!-- exclude -->b<!-- endexclude -->c";
     expected = "ac";
-    test.equal(task.preprocess(input, { env: 'production'}), expected, 'Should exclude generic');
+    test.equal(task.preprocess(input, { NODE_ENV: 'production'}), expected, 'Should exclude generic');
 
 
     input = "a<!-- include -->b<!-- endinclude -->c";
     expected = "abc";
-    test.equal(task.preprocess(input, { env: 'production'}), expected, 'Should include generic');
+    test.equal(task.preprocess(input, { NODE_ENV: 'production'}), expected, 'Should include generic');
 
     test.done();
   },
@@ -165,9 +165,20 @@ exports['preprocess'] = {
 
     var input,expected,settings;
 
-    input = "a<!-- include env='production' -->b<!-- endinclude -->c";
+    input = "a<!-- include NODE_ENV='production' -->b<!-- endinclude -->c";
     expected = "ac";
-    test.equal(task.preprocess(input, { env: 'dev'}), expected, 'Fail case, should not be included');
+    test.equal(task.preprocess(input, { NODE_ENV: 'dev'}), expected, 'Fail case, should not be included');
+
+    test.done();
+  },
+  'do simple replacements': function(test) {
+    test.expect(1);
+
+    var input,expected,settings;
+
+    input = "a<!-- insert FINGERPRINT -->c";
+    expected = "a0xDEADBEEFc";
+    test.equal(task.preprocess(input, { FINGERPRINT: '0xDEADBEEF'}), expected, 'Fail case, should not be included');
 
     test.done();
   }
