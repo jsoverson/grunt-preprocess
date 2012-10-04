@@ -19,11 +19,12 @@ grunt.util = grunt.util || grunt.utils;
 
 var _ = grunt.util._;
 
-var defaults = {
+var defaultEnv = {
 }
 
 var delim = {
   html : {
+    insert : "<!--[ \t]*insert[ \t]*([^\n]*)[ \t]*-->",
     exclude : {
       start : "<!--[ \t]*exclude[ \t]*([^\n]*)[ \t]*-->",
       end   : "<!--[ \t]*endexclude[ \t]*-->"
@@ -34,6 +35,7 @@ var delim = {
     }
   },
   js : {
+    insert : "//[ \t]*insert[ \t]*([^\n]*)[ \t]*",
     exclude : {
       start : "//[ \t]*exclude[ \t]*([^\n]*)[ \t]*",
       end   : "//[ \t]*endexclude[ \t]*"
@@ -45,13 +47,15 @@ var delim = {
   }
 }
 
+
+
 function init(grunt) {
 
   grunt.registerMultiTask('preprocess', 'Preprocess files based off environment configuration', function() {
 
-    var context = {
-      env : process.env.NODE_ENV || 'development'
-    };
+    var context = _.extend({},defaultEnv,process.env);
+
+    context.NODE_ENV = context.NODE_ENV || 'development';
 
     if (this.data.files) {
       if (!this.data.inline) {
@@ -101,11 +105,19 @@ function preprocess(src,context,type) {
     return testPasses(test,context) ? include : '';
   })
 
+  rv = rv.replace(getRegex(type,'insert'),function(match,variable) {
+    return context[_(variable).strip()];
+  });
+
   return rv;
 }
 
 function getRegex(type, def) {
-  return new RegExp(delim[type][def].start + '((?:.|\n|\r)*?)' + delim[type][def].end,'gi')
+
+  var isRegex = typeof delim[type][def] === 'string' || delim[type][def] instanceof RegExp;
+  return isRegex ?
+            new RegExp(delim[type][def],'gi') :
+            new RegExp(delim[type][def].start + '((?:.|\n|\r)*?)' + delim[type][def].end,'gi');
 }
 
 function getTestTemplate(test) {
