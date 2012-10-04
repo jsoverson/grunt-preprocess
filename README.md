@@ -139,6 +139,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+ - 0.4.0 Added support for inline JS directives
  - 0.3.0 Added insert, extended context to all environment
  - 0.2.0 Added simple directive syntax
  - 0.1.0 Initial release
