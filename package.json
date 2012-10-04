@@ -37,6 +37,9 @@
   },
   "keywords": [
     "gruntplugin",
+    "directive",
+    "var",
+    "ENV",
     "environment",
     "include",
     "exclude",
