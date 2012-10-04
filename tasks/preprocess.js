@@ -35,14 +35,14 @@ var delim = {
     }
   },
   js : {
-    insert : "//[ \t]*insert[ \t]*([^\n]*)[ \t]*",
+    insert : "(?://|/\\*)[ \t]*insert[ \t]*([^\n*]*)[ \t]*(?:\\*/)?",
     exclude : {
-      start : "//[ \t]*exclude[ \t]*([^\n]*)[ \t]*",
-      end   : "//[ \t]*endexclude[ \t]*"
+      start : "(?://|/\\*)[ \t]*exclude[ \t]*([^\n*]*)[ \t]*(?:\\*/)?",
+      end   : "(?://|/\\*)[ \t]*endexclude[ \t]*(?:\\*/)?"
     },
     include : {
-      start : "//[ \t]*include[ \t]*([^\n]*)[ \t]*",
-      end   : "//[ \t]*endinclude[ \t]*"
+      start : "(?://|/\\*)[ \t]*include[ \t]*([^\n*]*)[ \t]*(?:\\*/)?",
+      end   : "(?://|/\\*)[ \t]*endinclude[ \t]*(?:\\*/)?"
     }
   }
 }
