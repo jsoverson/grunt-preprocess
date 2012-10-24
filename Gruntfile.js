@@ -8,7 +8,7 @@ module.exports = function(grunt) {
       files: ['test/**/*_test.js']
     },
     lint: {
-      files: ['Gruntfile.js', 'tasks/**/*.js', 'test/**/*.js']
+      files: ['Gruntfile.js', 'tasks/**/*.js', '<config:test.files>']
     },
     watch: {
       files: '<config:lint.files>',
@@ -47,6 +47,6 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   // Default task.
-  grunt.registerTask('default', 'lint test');
+  grunt.registerTask('default', 'test');
 
 };
