@@ -13,9 +13,11 @@ grunt.loadNpmTasks('grunt-preprocess');
 
 ## Configuration and Usage
 
-grunt-preprocess is a Multi Task directive that takes your
+grunt-preprocess is a Grunt Multi Task that takes your
 standard source and destination and processes a template based
-around environment
+around environment configuration.
+
+Consider checking out [grunt-env](https://github.com/onehealth/grunt-env) for easing environment configuration.
 
 ```js
 preprocess : {
@@ -39,9 +41,9 @@ In this case, your directives for exclude are removed after the `preprocess` tas
 
 ```html
 <body>
-    <!-- exclude -->
+    <!-- @exclude -->
     <header>Your on dev!</header>
-    <!-- endexclude -->
+    <!-- @endexclude -->
 </body>
 ```
 
@@ -54,11 +56,15 @@ After build
 
 ### Extended directives
 
- - include VAR='value' / endinclude
+ - @if VAR='value' / @endif
    This will include the enclosed block if your test passes
- - exclude VAR='value' / endexclude
+ - @ifdef VAR / @endif
+   This will include the enclosed block if VAR is defined (typeof !== 'undefined')
+ - @ifndef VAR / @endif
+   This will include the enclosed block if VAR is not defined (typeof === 'undefined')
+ - @exclude / @endexclude
    This will remove the enclosed block if your test passes
- - insert VAR
+ - @echo VAR
    This will include the environment variable VAR into your source
 
 ### Extended html Syntax
@@ -68,16 +74,16 @@ environment configurations. You have access to simple tests of any ENV variable
 
 ```html
 <body>
-    <!-- exclude NODE_ENV='production' -->
+    <!-- @if NODE_ENV!='production' -->
     <header>Your on dev!</header>
-    <!-- endexclude -->
+    <!-- @endif -->
 
-    <!-- include NODE_ENV='production' -->
+    <!-- @if NODE_ENV='production' -->
     <script src="some/production/javascript.js"></script>
-    <!-- endinclude -->
+    <!-- @endif -->
 
     <script>
-    var fingerprint = '<!-- insert COMMIT_HASH -->' || 'DEFAULT';
+    var fingerprint = '<!-- @echo COMMIT_HASH -->' || 'DEFAULT';
     </script>
 </body>
 ```
@@ -115,9 +121,9 @@ Extended syntax below, but will work without specifying a test
 
 ```js
 normalFunction();
-//exclude NODE_ENV='production'
+//@exclude
 superExpensiveDebugFunction()
-//endexclude
+//@endexclude
 
 anotherFunction();
 ```
@@ -139,6 +145,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+ - 1.0.0 Changed syntax, added directives
  - 0.4.0 Added support for inline JS directives
  - 0.3.0 Added insert, extended context to all environment
  - 0.2.0 Added simple directive syntax
