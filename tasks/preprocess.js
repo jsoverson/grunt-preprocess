@@ -5,6 +5,7 @@
  * Copyright (c) 2012 Jarrod Overson
  * Licensed under the MIT license.
  */
+/*jshint node:true*/
 
 'use strict';
 
@@ -114,6 +115,7 @@ function preprocess(src,context,type) {
   var rv = '';
 
   rv = src.replace(getRegex(type,'exclude'),function(match,test,include){
+
     return testPasses(test,context) ? '' : include;
   })
 
