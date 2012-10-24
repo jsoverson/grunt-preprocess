@@ -24,25 +24,41 @@ var defaultEnv = {
 
 var delim = {
   html : {
-    insert : "<!--[ \t]*insert[ \t]*([^\n]*)[ \t]*-->",
+    insert : "<!--[ \t]*@echo[ \t]*([^\n]*)[ \t]*-->",
     exclude : {
-      start : "<!--[ \t]*exclude[ \t]*([^\n]*)[ \t]*-->",
-      end   : "<!--[ \t]*endexclude[ \t]*-->"
+      start : "<!--[ \t]*@exclude[ \t]*([^\n]*)[ \t]*-->",
+      end   : "<!--[ \t]*@endexclude[ \t]*-->"
     },
-    include : {
-      start : "<!--[ \t]*include[ \t]*([^\n]*)[ \t]*-->",
-      end   : "<!--[ \t]*endinclude[ \t]*-->"
+    if : {
+      start : "<!--[ \t]*@if[ \t]*([^\n]*)[ \t]*-->",
+      end   : "<!--[ \t]*@endif[ \t]*-->"
+    },
+    ifdef : {
+      start : "<!--[ \t]*@ifdef[ \t]*([^\n]*)[ \t]*-->",
+      end   : "<!--[ \t]*@endif[ \t]*-->"
+    },
+    ifndef : {
+      start : "<!--[ \t]*@ifndef[ \t]*([^\n]*)[ \t]*-->",
+      end   : "<!--[ \t]*@endif[ \t]*-->"
     }
   },
   js : {
-    insert : "(?://|/\\*)[ \t]*insert[ \t]*([^\n*]*)[ \t]*(?:\\*/)?",
+    insert : "(?://|/\\*)[ \t]*@echo[ \t]*([^\n*]*)[ \t]*(?:\\*/)?",
     exclude : {
-      start : "(?://|/\\*)[ \t]*exclude[ \t]*([^\n*]*)[ \t]*(?:\\*/)?",
-      end   : "(?://|/\\*)[ \t]*endexclude[ \t]*(?:\\*/)?"
+      start : "(?://|/\\*)[ \t]*@exclude[ \t]*([^\n*]*)[ \t]*(?:\\*/)?",
+      end   : "(?://|/\\*)[ \t]*@endexclude[ \t]*(?:\\*/)?"
     },
-    include : {
-      start : "(?://|/\\*)[ \t]*include[ \t]*([^\n*]*)[ \t]*(?:\\*/)?",
-      end   : "(?://|/\\*)[ \t]*endinclude[ \t]*(?:\\*/)?"
+    if : {
+      start : "(?://|/\\*)[ \t]*@if[ \t]*([^\n*]*)[ \t]*(?:\\*/)?",
+      end   : "(?://|/\\*)[ \t]*@endif[ \t]*(?:\\*/)?"
+    },
+    ifdef : {
+      start : "(?://|/\\*)[ \t]*@ifdef[ \t]*([^\n*]*)[ \t]*(?:\\*/)?",
+      end   : "(?://|/\\*)[ \t]*@endif[ \t]*(?:\\*/)?"
+    },
+    ifndef : {
+      start : "(?://|/\\*)[ \t]*@ifndef[ \t]*([^\n*]*)[ \t]*(?:\\*/)?",
+      end   : "(?://|/\\*)[ \t]*@endif[ \t]*(?:\\*/)?"
     }
   }
 }
@@ -101,9 +117,23 @@ function preprocess(src,context,type) {
     return testPasses(test,context) ? '' : include;
   })
 
-  rv = rv.replace(getRegex(type,'include'),function(match,test,include){
+  rv = rv.replace(getRegex(type,'ifdef'),function(match,test,include){
+    test = _(test).trim();
+    return typeof context[test] !== 'undefined' ? include : '';
+  })
+
+  rv = rv.replace(getRegex(type,'ifndef'),function(match,test,include){
+    test = _(test).trim();
+    return typeof context[test] === 'undefined' ? include : '';
+  })
+
+  rv = rv.replace(getRegex(type,'if'),function(match,test,include){
     return testPasses(test,context) ? include : '';
   })
+
+//  false && rv = rv.replace(getRegex(type,'if'),function(match,test,include){
+//    return testPasses(test,context) ? include : '';
+//  })
 
   rv = rv.replace(getRegex(type,'insert'),function(match,variable) {
     return context[_(variable).strip()];
