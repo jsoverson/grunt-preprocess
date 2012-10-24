@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- exclude NODE_ENV='production' -->
+    <!-- @if NODE_ENV!='production' -->
     <title>dev title</title>
-    <!-- endexclude -->
+    <!-- @endif -->
 
-  <!-- exclude NODE_ENV='development' -->
+  <!-- @if NODE_ENV!='development' -->
   <title>prod title</title>
-  <!-- endexclude -->
+  <!-- @endif -->
 
 </head>
 <body>
-  <h1><!-- insert HOME --></h1>
+  <h1><!-- @echo HOME --></h1>
 </body>
 </html>

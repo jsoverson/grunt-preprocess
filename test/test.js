@@ -3,8 +3,12 @@
 define([], function () {
   "use strict";
 
-  //exclude NODE_ENV='production'
+  //@exclude NODE_ENV='production'
   superExpensiveFunction()
-  //endexclude
+  //@endexclude
+
+  //@if NODE_ENV='production'
+  superExpensiveFunction()
+  //@endif
 
 });
