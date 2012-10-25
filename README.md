@@ -25,6 +25,16 @@ preprocess : {
     src : 'test/test.html',
     dest : 'test/test.processed.html'
   },
+  multifile : {
+    files : {
+    'test/test.processed.html' : 'test/test.html'
+    'test/test.processed.js'   : 'test/test.js'
+    }
+  },
+  inline : {
+    files : [ 'processed/**/*.js' ]
+    inline : true
+  },
   js : {
     src : 'test/test.js',
     dest : 'test/test.js'
@@ -145,6 +155,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+ - 1.1.0 Added ability to process multiple destinations in a files block
  - 1.0.0 Changed syntax, added directives
  - 0.4.0 Added support for inline JS directives
  - 0.3.0 Added insert, extended context to all environment

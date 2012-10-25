@@ -70,29 +70,40 @@ function init(grunt) {
 
   grunt.registerMultiTask('preprocess', 'Preprocess files based off environment configuration', function() {
 
-    var context = _.extend({},defaultEnv,process.env);
+    var context = _.extend({},defaultEnv,process.env), files;
 
     context.NODE_ENV = context.NODE_ENV || 'development';
 
     if (this.data.files) {
-      if (!this.data.inline) {
-        grunt.log.error('WARNING : POTENTIAL CODE LOSS.'.yellow);
-        grunt.log.error('You must specify "inline : true" when using the "files" configuration.');
-        grunt.log.errorlns(
-          'This WILL REWRITE FILES WITHOUT MAKING BACKUPS. Make sure your ' +
-            'code is checked in or you are configured to operate on a copied directory.'
-        );
-        return;
+      console.log(this.data.files);
+      if (_.isArray(this.data.files) || _.isString(this.data.files)) {
+        if (!this.data.inline) {
+          grunt.log.error('WARNING : POTENTIAL CODE LOSS.'.yellow);
+          grunt.log.error('You must specify "inline : true" when using the "files" configuration.');
+          grunt.log.errorlns(
+            'This WILL REWRITE FILES WITHOUT MAKING BACKUPS. Make sure your ' +
+              'code is checked in or you are configured to operate on a copied directory.'
+          );
+          return;
+        }
+        files = grunt.file.expandFiles(this.data.files);
+        files.forEach(function(src) {
+          var text = grunt.file.read(src);
+          var processed = preprocess(text,context,getExtension(src));
+          grunt.file.write(src, processed);
+        });
+      } else {
+        for (var dest in this.data.files) {
+          if (!this.data.files.hasOwnProperty(dest)) continue;
+          var src = this.data.files[dest];
+          var text = grunt.file.read(src);
+          var processed = preprocess(text,context,getExtension(src));
+          grunt.file.write(dest, processed);
+        }
       }
-      var files = grunt.file.expandFiles(this.data.files);
-      files.forEach(function(src) {
-        var text = grunt.file.read(src);
-        var processed = preprocess(text,context,getExtension(src));
-        grunt.file.write(src, processed);
-      });
     } else {
       var src = this.file.src,
-        dest = this.file.dest;
+          dest = this.file.dest;
 
       var text = grunt.file.read(src);
       var processed = preprocess(text,context,getExtension(src));
