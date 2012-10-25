@@ -1,37 +1,6 @@
 # grunt-preprocess
 
 Preprocess HTML and JavaScript with directives based off ENV configuration
-
-## Getting Started
-Install this grunt plugin next to your project's [Gruntfile][getting_started] with: `npm install grunt-preprocess`
-
-Then add this line to your project's Gruntfile:
-
-```javascript
-grunt.loadNpmTasks('grunt-preprocess');
-```
-
-## Configuration and Usage
-
-grunt-preprocess is a Grunt Multi Task that takes your
-standard source and destination and processes a template based
-around environment configuration.
-
-Consider checking out [grunt-env](https://github.com/onehealth/grunt-env) for easing environment configuration.
-
-```js
-preprocess : {
-  html : {
-    src : 'test/test.html',
-    dest : 'test/test.processed.html'
-  },
-  js : {
-    src : 'test/test.js',
-    dest : 'test/test.js'
-  }
-}
-```
-
 ## Directive syntax
 
 ### Simple syntax
@@ -134,6 +103,39 @@ Built with a NODE_ENV of production :
 normalFunction();
 
 anotherFunction();
+```
+
+
+
+
+## Getting Started
+Install this grunt plugin next to your project's [Gruntfile][getting_started] with: `npm install grunt-preprocess`
+
+Then add this line to your project's Gruntfile:
+
+```javascript
+grunt.loadNpmTasks('grunt-preprocess');
+```
+
+## Configuration and Usage
+
+grunt-preprocess is a Grunt Multi Task that takes your
+standard source and destination and processes a template based
+around environment configuration.
+
+Consider checking out [grunt-env](https://github.com/onehealth/grunt-env) for easing environment configuration.
+
+```js
+preprocess : {
+  html : {
+    src : 'test/test.html',
+    dest : 'test/test.processed.html'
+  },
+  js : {
+    src : 'test/test.js',
+    dest : 'test/test.js'
+  }
+}
 ```
 
 
