@@ -2,44 +2,33 @@
 
 Preprocess HTML and JavaScript with directives based off ENV configuration
 
-## Getting Started
-Install this grunt plugin next to your project's [Gruntfile][getting_started] with: `npm install grunt-preprocess`
+Consider looking at [grunt-env](https://github.com/onehealth/grunt-env) for easier environment configuration.
 
-Then add this line to your project's Gruntfile:
+## What does it look like?
 
-```javascript
-grunt.loadNpmTasks('grunt-preprocess');
+```html
+<head>
+  <title>Your App
+
+  <!-- @if NODE_ENV='production' -->
+  <script src="some/production/lib/like/analytics.js"></script>
+  <!-- @endif -->
+  
+</head>
+<body>
+  <!-- @ifdef DEBUG -->
+  <h1>Debugging mode - <!-- @echo RELEASE_TAG --> </h1>
+  <!-- @endif -->
+</body>
 ```
 
-## Configuration and Usage
+```js 
+var configValue = '/* @echo FOO */' || 'default value';
 
-grunt-preprocess is a Grunt Multi Task that takes your
-standard source and destination and processes a template based
-around environment configuration.
+// @ifdef DEBUG 
+someDebuggingCall()
+// @endif
 
-Consider checking out [grunt-env](https://github.com/onehealth/grunt-env) for easing environment configuration.
-
-```js
-preprocess : {
-  html : {
-    src : 'test/test.html',
-    dest : 'test/test.processed.html'
-  },
-  multifile : {
-    files : {
-    'test/test.processed.html' : 'test/test.html'
-    'test/test.processed.js'   : 'test/test.js'
-    }
-  },
-  inline : {
-    files : [ 'processed/**/*.js' ]
-    inline : true
-  },
-  js : {
-    src : 'test/test.js',
-    dest : 'test/test.js'
-  }
-}
 ```
 
 ## Directive syntax
@@ -52,7 +41,7 @@ In this case, your directives for exclude are removed after the `preprocess` tas
 ```html
 <body>
     <!-- @exclude -->
-    <header>Your on dev!</header>
+    <header>You're on dev!</header>
     <!-- @endexclude -->
 </body>
 ```
@@ -64,17 +53,17 @@ After build
 </body>
 ```
 
-### Extended directives
+### Advanced directives
 
- - @if VAR='value' / @endif
+ - `@if VAR='value'` / `@endif`
    This will include the enclosed block if your test passes
- - @ifdef VAR / @endif
+ - `@ifdef VAR` / `@endif`
    This will include the enclosed block if VAR is defined (typeof !== 'undefined')
- - @ifndef VAR / @endif
+ - `@ifndef VAR` / `@endif`
    This will include the enclosed block if VAR is not defined (typeof === 'undefined')
- - @exclude / @endexclude
-   This will remove the enclosed block if your test passes
- - @echo VAR
+ - `@exclude` / `@endexclude`
+   This will remove the enclosed block upon processing
+ - `@echo VAR`
    This will include the environment variable VAR into your source
 
 ### Extended html Syntax
@@ -144,6 +133,48 @@ Built with a NODE_ENV of production :
 normalFunction();
 
 anotherFunction();
+```
+
+
+
+
+## Getting Started
+Install this grunt plugin next to your project's [Gruntfile][getting_started] with: `npm install grunt-preprocess`
+
+Then add this line to your project's Gruntfile:
+
+```javascript
+grunt.loadNpmTasks('grunt-preprocess');
+```
+
+## Configuration and Usage
+
+grunt-preprocess is a Grunt Multi Task that takes your
+standard source and destination and processes a template based
+around environment configuration.
+
+
+```js
+preprocess : {
+  html : {
+    src : 'test/test.html',
+    dest : 'test/test.processed.html'
+  },
+  multifile : {
+    files : {
+    'test/test.processed.html' : 'test/test.html'
+    'test/test.processed.js'   : 'test/test.js'
+    }
+  },
+  inline : {
+    files : [ 'processed/**/*.js' ]
+    inline : true
+  },
+  js : {
+    src : 'test/test.js',
+    dest : 'test/test.js'
+  }
+}
 ```
 
 
