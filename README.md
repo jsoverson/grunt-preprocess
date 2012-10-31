@@ -19,6 +19,9 @@ Consider looking at [grunt-env](https://github.com/onehealth/grunt-env) for easi
   <!-- @ifdef DEBUG -->
   <h1>Debugging mode - <!-- @echo RELEASE_TAG --> </h1>
   <!-- @endif -->
+  <p>
+  <!-- @include welcome_message.txt -->
+  </p>
 </body>
 ```
 
@@ -61,6 +64,8 @@ After build
    This will include the enclosed block if VAR is defined (typeof !== 'undefined')
  - `@ifndef VAR` / `@endif`
    This will include the enclosed block if VAR is not defined (typeof === 'undefined')
+ - `@include`
+   This will include the source from an external file
  - `@exclude` / `@endexclude`
    This will remove the enclosed block upon processing
  - `@echo VAR`
@@ -186,6 +191,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+ - 1.2.0 Added @include to include external files
  - 1.1.0 Added ability to process multiple destinations in a files block
  - 1.0.0 Changed syntax, added directives
  - 0.4.0 Added support for inline JS directives
