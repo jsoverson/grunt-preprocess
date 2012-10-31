@@ -103,6 +103,7 @@ function init(grunt) {
           context.src = src;
           context.srcDir = path.dirname(src);
           var processed = preprocess(text,context,getExtension(src));
+          dest = grunt.template.process(dest);
           grunt.file.write(dest, processed);
         }
       }
@@ -114,6 +115,7 @@ function init(grunt) {
 
       var text = grunt.file.read(src);
       var processed = preprocess(text,context,getExtension(src));
+      dest = grunt.template.process(dest);
       grunt.file.write(dest, processed);
     }
 
