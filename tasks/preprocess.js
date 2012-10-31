@@ -26,6 +26,7 @@ var defaultEnv = {
 var delim = {
   html : {
     insert : "<!--[ \t]*@echo[ \t]*([^\n]*)[ \t]*-->",
+    include : "<!--[ \t]*@include[ \t]*([^\n]*)[ \t]*-->",
     exclude : {
       start : "<!--[ \t]*@exclude[ \t]*([^\n]*)[ \t]*-->",
       end   : "<!--[ \t]*@endexclude[ \t]*-->"
@@ -45,6 +46,7 @@ var delim = {
   },
   js : {
     insert : "(?://|/\\*)[ \t]*@echo[ \t]*([^\n*]*)[ \t]*(?:\\*/)?",
+    include : "(?://|/\\*)[ \t]*@include[ \t]*([^\n*]*)[ \t]*(?:\\*/)?",
     exclude : {
       start : "(?://|/\\*)[ \t]*@exclude[ \t]*([^\n*]*)[ \t]*(?:\\*/)?",
       end   : "(?://|/\\*)[ \t]*@endexclude[ \t]*(?:\\*/)?"
@@ -89,14 +91,18 @@ function init(grunt) {
         files = grunt.file.expandFiles(this.data.files);
         files.forEach(function(src) {
           var text = grunt.file.read(src);
+          context.src = src;
+          context.srcDir = path.dirname(src);
           var processed = preprocess(text,context,getExtension(src));
           grunt.file.write(src, processed);
         });
       } else {
         for (var dest in this.data.files) {
           if (!this.data.files.hasOwnProperty(dest)) continue;
-          var src = this.data.files[dest];
-          var text = grunt.file.read(src);
+          var src = this.data.files[dest],
+              text = grunt.file.read(src);
+          context.src = src;
+          context.srcDir = path.dirname(src);
           var processed = preprocess(text,context,getExtension(src));
           grunt.file.write(dest, processed);
         }
@@ -104,6 +110,8 @@ function init(grunt) {
     } else {
       var src = this.file.src,
           dest = this.file.dest;
+      context.src = src;
+      context.srcDir = path.dirname(src);
 
       var text = grunt.file.read(src);
       var processed = preprocess(text,context,getExtension(src));
@@ -123,10 +131,15 @@ function preprocess(src,context,type) {
 
   type = type || 'html';
 
-  var rv = '';
+  var rv = src;
 
-  rv = src.replace(getRegex(type,'exclude'),function(match,test,include){
+  rv = rv.replace(getRegex(type,'include'),function(match,file,include){
+    file = grunt.util._(file).trim();
+    var includedSource = grunt.file.read(path.join(context.srcDir,file));
+    return includedSource || match + ' not found';
+  })
 
+  rv = rv.replace(getRegex(type,'exclude'),function(match,test,include){
     return testPasses(test,context) ? '' : include;
   })
 
@@ -143,10 +156,6 @@ function preprocess(src,context,type) {
   rv = rv.replace(getRegex(type,'if'),function(match,test,include){
     return testPasses(test,context) ? include : '';
   })
-
-//  false && rv = rv.replace(getRegex(type,'if'),function(match,test,include){
-//    return testPasses(test,context) ? include : '';
-//  })
 
   rv = rv.replace(getRegex(type,'insert'),function(match,variable) {
     return context[_(variable).strip()];
