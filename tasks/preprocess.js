@@ -77,7 +77,6 @@ function init(grunt) {
     context.NODE_ENV = context.NODE_ENV || 'development';
 
     if (this.data.files) {
-      console.log(this.data.files);
       if (_.isArray(this.data.files) || _.isString(this.data.files)) {
         if (!this.data.inline) {
           grunt.log.error('WARNING : POTENTIAL CODE LOSS.'.yellow);
