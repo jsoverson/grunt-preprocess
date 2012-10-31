@@ -216,14 +216,28 @@ exports['preprocess'] = {
 
     test.done();
   },
-  'do simple replacements': function(test) {
+  'include files': function(test) {
+    test.expect(2);
+
+    var input,expected,settings;
+    input = "a<!-- @include include.txt -->c";
+    expected = "a!foobar!\nc";
+    test.equal(task.preprocess(input, { srcDir : 'test'}), expected, 'Should include files');
+
+    input = "a/* @include include.txt */c";
+    expected = "a!foobar!\nc";
+    test.equal(task.preprocess(input, { srcDir : 'test'},'js'), expected, 'Should include files (js)');
+
+    test.done();
+  },
+  'echo': function(test) {
     test.expect(1);
 
     var input,expected,settings;
 
     input = "a<!-- @echo FINGERPRINT -->c";
     expected = "a0xDEADBEEFc";
-    test.equal(task.preprocess(input, { FINGERPRINT: '0xDEADBEEF'}), expected, 'Fail case, should not be included');
+    test.equal(task.preprocess(input, { FINGERPRINT: '0xDEADBEEF'}), expected, 'Should include echo statement');
 
     test.done();
   }
