@@ -9,4 +9,7 @@ define([], function () {
 
   
 
+  !foobar!
+
+
 });
