@@ -191,6 +191,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+ - 1.2.1 Added @include to include external files
  - 1.2.0 Added @include to include external files
  - 1.1.0 Added ability to process multiple destinations in a files block
  - 1.0.0 Changed syntax, added directives
