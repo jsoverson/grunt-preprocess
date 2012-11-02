@@ -1,9 +1,10 @@
 /*
- * grunt-preprocess
- * https://github.com/joverson/grunt-preprocess
+ * preprocess
+ * https://github.com/onehealth/grunt-preprocess
  *
- * Copyright (c) 2012 Jarrod Overson
- * Licensed under the MIT license.
+ * Copyright (c) 2012 OneHealth Solutions, Inc.
+ * Written by Jarrod Overson - http://jarrodoverson.com/
+ * Licensed under the Apache 2.0 license.
  */
 /*jshint node:true*/
 
@@ -13,59 +14,14 @@ module.exports = init;
 init.preprocess = preprocess;
 
 var grunt = require('grunt'),
-    path = require('path');
+    path = require('path'),
+    preprocess = require('preprocess');
 
 // remove when 0.4.0
 grunt.util = grunt.util || grunt.utils;
 
 var _ = grunt.util._;
-
-var defaultEnv = {
-}
-
-var delim = {
-  html : {
-    insert : "<!--[ \t]*@echo[ \t]*([^\n]*)[ \t]*-->",
-    include : "<!--[ \t]*@include[ \t]*([^\n]*)[ \t]*-->",
-    exclude : {
-      start : "<!--[ \t]*@exclude[ \t]*([^\n]*)[ \t]*-->",
-      end   : "<!--[ \t]*@endexclude[ \t]*-->"
-    },
-    if : {
-      start : "<!--[ \t]*@if[ \t]*([^\n]*)[ \t]*-->",
-      end   : "<!--[ \t]*@endif[ \t]*-->"
-    },
-    ifdef : {
-      start : "<!--[ \t]*@ifdef[ \t]*([^\n]*)[ \t]*-->",
-      end   : "<!--[ \t]*@endif[ \t]*-->"
-    },
-    ifndef : {
-      start : "<!--[ \t]*@ifndef[ \t]*([^\n]*)[ \t]*-->",
-      end   : "<!--[ \t]*@endif[ \t]*-->"
-    }
-  },
-  js : {
-    insert : "(?://|/\\*)[ \t]*@echo[ \t]*([^\n*]*)[ \t]*(?:\\*/)?",
-    include : "(?://|/\\*)[ \t]*@include[ \t]*([^\n*]*)[ \t]*(?:\\*/)?",
-    exclude : {
-      start : "(?://|/\\*)[ \t]*@exclude[ \t]*([^\n*]*)[ \t]*(?:\\*/)?",
-      end   : "(?://|/\\*)[ \t]*@endexclude[ \t]*(?:\\*/)?"
-    },
-    if : {
-      start : "(?://|/\\*)[ \t]*@if[ \t]*([^\n*]*)[ \t]*(?:\\*/)?",
-      end   : "(?://|/\\*)[ \t]*@endif[ \t]*(?:\\*/)?"
-    },
-    ifdef : {
-      start : "(?://|/\\*)[ \t]*@ifdef[ \t]*([^\n*]*)[ \t]*(?:\\*/)?",
-      end   : "(?://|/\\*)[ \t]*@endif[ \t]*(?:\\*/)?"
-    },
-    ifndef : {
-      start : "(?://|/\\*)[ \t]*@ifndef[ \t]*([^\n*]*)[ \t]*(?:\\*/)?",
-      end   : "(?://|/\\*)[ \t]*@endif[ \t]*(?:\\*/)?"
-    }
-  }
-}
-
+var defaultEnv = {};
 
 
 function init(grunt) {
@@ -89,96 +45,22 @@ function init(grunt) {
         }
         files = grunt.file.expandFiles(this.data.files);
         files.forEach(function(src) {
-          var text = grunt.file.read(src);
-          context.src = src;
-          context.srcDir = path.dirname(src);
-          var processed = preprocess(text,context,getExtension(src));
-          grunt.file.write(src, processed);
+          preprocess.preprocessFileSync(src,src,context);
         });
       } else {
         for (var dest in this.data.files) {
           if (!this.data.files.hasOwnProperty(dest)) continue;
-          var src = this.data.files[dest],
-              text = grunt.file.read(src);
-          context.src = src;
-          context.srcDir = path.dirname(src);
-          var processed = preprocess(text,context,getExtension(src));
+          var src = this.data.files[dest];
           dest = grunt.template.process(dest);
-          grunt.file.write(dest, processed);
+          preprocess.preprocessFileSync(src,dest,context);
         }
       }
     } else {
       var src = this.file.src,
           dest = this.file.dest;
-      context.src = src;
-      context.srcDir = path.dirname(src);
-
-      var text = grunt.file.read(src);
-      var processed = preprocess(text,context,getExtension(src));
       dest = grunt.template.process(dest);
-      grunt.file.write(dest, processed);
+      preprocess.preprocessFileSync(src,dest,context);
     }
 
   });
 };
-
-function getExtension(filename) {
-  var ext = path.extname(filename||'').split('.');
-  return ext[ext.length - 1];
-}
-
-function preprocess(src,context,type) {
-  context = context || {};
-
-  type = type || 'html';
-
-  var rv = src;
-
-  rv = rv.replace(getRegex(type,'include'),function(match,file,include){
-    file = grunt.util._(file).trim();
-    var includedSource = grunt.file.read(path.join(context.srcDir,file));
-    return includedSource || match + ' not found';
-  })
-
-  rv = rv.replace(getRegex(type,'exclude'),function(match,test,include){
-    return testPasses(test,context) ? '' : include;
-  })
-
-  rv = rv.replace(getRegex(type,'ifdef'),function(match,test,include){
-    test = _(test).trim();
-    return typeof context[test] !== 'undefined' ? include : '';
-  })
-
-  rv = rv.replace(getRegex(type,'ifndef'),function(match,test,include){
-    test = _(test).trim();
-    return typeof context[test] === 'undefined' ? include : '';
-  })
-
-  rv = rv.replace(getRegex(type,'if'),function(match,test,include){
-    return testPasses(test,context) ? include : '';
-  })
-
-  rv = rv.replace(getRegex(type,'insert'),function(match,variable) {
-    return context[_(variable).strip()];
-  });
-
-  return rv;
-}
-
-function getRegex(type, def) {
-
-  var isRegex = typeof delim[type][def] === 'string' || delim[type][def] instanceof RegExp;
-  return isRegex ?
-            new RegExp(delim[type][def],'gi') :
-            new RegExp(delim[type][def].start + '((?:.|\n|\r)*?)' + delim[type][def].end,'gi');
-}
-
-function getTestTemplate(test) {
-  test = test || 'true';
-  test = test.replace(/([^=])=([^=])/g, '$1==$2');
-  return '<% if ('+test+') { %>true<% }else{ %>false<% } %>'
-}
-
-function testPasses(test,context) {
-  return _.template(getTestTemplate(test),context) === 'true';
-}
