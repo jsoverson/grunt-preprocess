@@ -1,8 +1,6 @@
 # grunt-preprocess
 
-Preprocess HTML and JavaScript with directives based off ENV configuration
-
-Consider looking at [grunt-env](https://github.com/onehealth/grunt-env) for easier environment configuration.
+Grunt task around [preprocess](https://github.com/onehealth/preprocess) npm module
 
 ## What does it look like?
 
@@ -34,113 +32,7 @@ someDebuggingCall()
 
 ```
 
-## Directive syntax
-
-### Simple syntax
-
-The most basic usage is for files that only have two states, non-processed and processed.
-In this case, your directives for exclude are removed after the `preprocess` task
-
-```html
-<body>
-    <!-- @exclude -->
-    <header>You're on dev!</header>
-    <!-- @endexclude -->
-</body>
-```
-
-After build
-
-```html
-<body>
-</body>
-```
-
-### Advanced directives
-
- - `@if VAR='value'` / `@endif`
-   This will include the enclosed block if your test passes
- - `@ifdef VAR` / `@endif`
-   This will include the enclosed block if VAR is defined (typeof !== 'undefined')
- - `@ifndef VAR` / `@endif`
-   This will include the enclosed block if VAR is not defined (typeof === 'undefined')
- - `@include`
-   This will include the source from an external file
- - `@exclude` / `@endexclude`
-   This will remove the enclosed block upon processing
- - `@echo VAR`
-   This will include the environment variable VAR into your source
-
-### Extended html Syntax
-
-This is useful for more fine grained control of your files over multiple
-environment configurations. You have access to simple tests of any ENV variable
-
-```html
-<body>
-    <!-- @if NODE_ENV!='production' -->
-    <header>Your on dev!</header>
-    <!-- @endif -->
-
-    <!-- @if NODE_ENV='production' -->
-    <script src="some/production/javascript.js"></script>
-    <!-- @endif -->
-
-    <script>
-    var fingerprint = '<!-- @echo COMMIT_HASH -->' || 'DEFAULT';
-    </script>
-</body>
-```
-
-With a `NODE_ENV` set to `production` and `0xDEADBEEF` in
-`COMMIT_HASH` this will be built to look like
-
-```html
-<body>
-    <script src="some/production/javascript.js"></script>
-
-    <script>
-    var fingerprint = '0xDEADBEEF' || 'DEFAULT';
-    </script>
-</body>
-```
-
-With NODE_ENV not set or set to dev and nothing in COMMIT_HASH,
-the built file will be
-
-```html
-<body>
-    <header>Your on dev!</header>
-
-    <script>
-    var fingerprint = '' || 'DEFAULT';
-    </script>
-</body>
-```
-
-
-### JavaScript Syntax
-
-Extended syntax below, but will work without specifying a test
-
-```js
-normalFunction();
-//@exclude
-superExpensiveDebugFunction()
-//@endexclude
-
-anotherFunction();
-```
-
-Built with a NODE_ENV of production :
-
-```js
-normalFunction();
-
-anotherFunction();
-```
-
-
+See preprocess documentation for more information
 
 
 ## Getting Started
@@ -167,8 +59,8 @@ preprocess : {
   },
   multifile : {
     files : {
-    'test/test.processed.html' : 'test/test.html'
-    'test/test.processed.js'   : 'test/test.js'
+      'test/test.processed.html' : 'test/test.html'
+      'test/test.processed.js'   : 'test/test.js'
     }
   },
   inline : {
@@ -191,6 +83,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+ - 1.3.0 Moved logic to 'preprocess' npm module
  - 1.2.1 Added @include to include external files
  - 1.2.0 Added @include to include external files
  - 1.1.0 Added ability to process multiple destinations in a files block
