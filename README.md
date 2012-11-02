@@ -59,8 +59,8 @@ preprocess : {
   },
   multifile : {
     files : {
-      'test/test.processed.html' : 'test/test.html'
-      'test/test.processed.js'   : 'test/test.js'
+    'test/test.processed.html' : 'test/test.html'
+    'test/test.processed.js'   : 'test/test.js'
     }
   },
   inline : {
