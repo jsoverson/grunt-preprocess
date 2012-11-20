@@ -56,7 +56,7 @@ function init(grunt) {
         }
       }
     } else {
-      var src = this.file.src,
+      var src = this.file.src[0],
           dest = this.file.dest;
       dest = grunt.template.process(dest);
       preprocess.preprocessFileSync(src,dest,context);
