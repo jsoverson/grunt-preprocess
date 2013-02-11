@@ -11,7 +11,7 @@ Grunt task around [preprocess](https://github.com/onehealth/preprocess) npm modu
   <!-- @if NODE_ENV='production' -->
   <script src="some/production/lib/like/analytics.js"></script>
   <!-- @endif -->
-  
+
 </head>
 <body>
   <!-- @ifdef DEBUG -->
@@ -23,10 +23,10 @@ Grunt task around [preprocess](https://github.com/onehealth/preprocess) npm modu
 </body>
 ```
 
-```js 
+```js
 var configValue = '/* @echo FOO */' || 'default value';
 
-// @ifdef DEBUG 
+// @ifdef DEBUG
 someDebuggingCall()
 // @endif
 
@@ -53,6 +53,9 @@ around environment configuration.
 
 ```js
 preprocess : {
+  options: {
+    DEBUG: true
+  },
   html : {
     src : 'test/test.html',
     dest : 'test/test.processed.html'
@@ -65,7 +68,10 @@ preprocess : {
   },
   inline : {
     files : [ 'processed/**/*.js' ],
-    inline : true
+    inline : true,
+    options: {
+      DEBUG: false
+    }
   },
   js : {
     src : 'test/test.js',
