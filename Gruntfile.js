@@ -16,12 +16,22 @@ module.exports = function(grunt) {
     },
     preprocess : {
       html : {
-        src : 'test/test.html',
-        dest : 'test/test.processed.html'
+        src : 'test/fixtures/test.html',
+        dest : 'test/fixtures/test.processed.html'
       },
       js : {
-        src : 'test/test.js',
-        dest : 'test/test.processed.js'
+        src : 'test/fixtures/test.js',
+        dest : 'test/fixtures/test.processed.js'
+      },
+      expanded : {
+        files : {
+          'test/fixtures/inline-temp/test-expected.js' : 'test/fixtures/inline/test.js',
+          'test/fixtures/inline-temp/test2-expected.js' : 'test/fixtures/inline/test2.js'
+        }
+      },
+      inline : {
+        files : 'test/fixtures/inline-temp/*.js',
+        inline : true
       }
     },
     jshint: {
@@ -40,13 +50,29 @@ module.exports = function(grunt) {
         es5: true
       },
       globals: {}
+    },
+    copy : {
+      test : {
+        src : 'test/fixtures/inline/*',
+        dest : 'test/fixtures/inline-temp/'
+      }
+    },
+    clean : {
+      test : ['test/fixtures/inline/inline-temp/*']
+    },
+    nodeunit: {
+      tests: ['test/*_test.js']
     }
   });
+
+  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   // Load local tasks.
   grunt.loadTasks('tasks');
 
   // Default task.
-  grunt.registerTask('default', 'test');
+  grunt.registerTask('default', ['clean','copy','preprocess', 'nodeunit']);
 
 };

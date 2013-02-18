@@ -24,15 +24,44 @@ var grunt = require('grunt');
 
 var task = require('../tasks/preprocess');
 
-// tests extracted to preprocess. Still figuring out what to test here.
-
 exports['preprocess'] = {
   setUp: function(done) {
     // setup here
     done();
   },
   'preprocess html': function(test) {
-    test.expect(0);
+    test.expect(1);
+    var expected, actual;
+
+    expected = grunt.file.read('test/fixtures/test.processed.expected.html');
+    actual = grunt.file.read('test/fixtures/test.processed.html');
+    test.equal(expected, actual, 'Files differ');
+
+    test.done();
+
+  },
+  'preprocess js': function(test) {
+    test.expect(1);
+    var expected, actual;
+
+    expected = grunt.file.read('test/fixtures/test.processed.expected.js');
+    actual = grunt.file.read('test/fixtures/test.processed.js');
+    test.equal(expected, actual, 'Files differ');
+
+    test.done();
+
+  },
+  'inline': function(test) {
+    test.expect(2);
+    var expected, actual;
+
+    expected = grunt.file.read('test/fixtures/inline-temp/test-expected.js');
+    actual = grunt.file.read('test/fixtures/inline-temp/test.js');
+    test.equal(expected, actual, 'Files differ');
+    expected = grunt.file.read('test/fixtures/inline-temp/test2-expected.js');
+    actual = grunt.file.read('test/fixtures/inline-temp/test2.js');
+    test.equal(expected, actual, 'Files differ');
+
     test.done();
 
   }
