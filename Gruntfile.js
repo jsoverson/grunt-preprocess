@@ -4,61 +4,48 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    test: {
-      files: ['test/**/*_test.js']
-    },
-    lint: {
-      files: ['Gruntfile.js', 'tasks/**/*.js', '<config:test.files>']
-    },
-    watch: {
-      files: '<config:lint.files>',
-      tasks: 'default'
-    },
     preprocess : {
       html : {
         src : 'test/fixtures/test.html',
-        dest : 'test/fixtures/test.processed.html'
+        dest : 'tmp/test.processed.html',
+        options : {
+          context : {
+            customOption : 'foo'
+          }
+        }
       },
       js : {
         src : 'test/fixtures/test.js',
-        dest : 'test/fixtures/test.processed.js'
+        dest : 'tmp/test.processed.js'
       },
       expanded : {
         files : {
-          'test/fixtures/inline-temp/test-expected.js' : 'test/fixtures/inline/test.js',
-          'test/fixtures/inline-temp/test2-expected.js' : 'test/fixtures/inline/test2.js'
+          'tmp/test-inline-expected.js' : 'test/fixtures/inline/test.js',
+          'tmp/test2-inline-expected.js' : 'test/fixtures/inline/test2.js'
         }
       },
       inline : {
-        files : 'test/fixtures/inline-temp/*.js',
-        inline : true
+        src : 'tmp/inline-temp/*.js',
+        options : {
+          inline : true
+        }
       }
     },
     jshint: {
       options: {
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        boss: true,
-        eqnull: true,
-        node: true,
-        es5: true
+        jshintrc : '.jshintrc'
       },
-      globals: {}
+      all : ['Gruntfile.js', 'tasks/**/*.js']
     },
     copy : {
       test : {
-        src : 'test/fixtures/inline/*',
-        dest : 'test/fixtures/inline-temp/'
+        files : [
+          {src : '*', dest : 'tmp/inline-temp', expand : true, cwd : 'test/fixtures/inline/'}
+        ]
       }
     },
     clean : {
-      test : ['test/fixtures/inline/inline-temp/*']
+      test : ['tmp/inline-temp/*']
     },
     nodeunit: {
       tests: ['test/*_test.js']
@@ -68,11 +55,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
 
   // Load local tasks.
   grunt.loadTasks('tasks');
 
   // Default task.
-  grunt.registerTask('default', ['clean','copy','preprocess', 'nodeunit']);
+  grunt.registerTask('default', ['jshint','clean','copy','preprocess', 'nodeunit']);
 
 };

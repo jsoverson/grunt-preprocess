@@ -11,6 +11,6 @@ define([], function () {
   superExpensiveFunction()
   //@endif
 
-  /*@include ../include.txt */
+  /*@include include.txt */
 
 });

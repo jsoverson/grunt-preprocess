@@ -11,6 +11,6 @@ define([], function () {
   foo2()
   //@endif
 
-  /*@include ../include.txt */
+  /*@include include.txt */
 
 });

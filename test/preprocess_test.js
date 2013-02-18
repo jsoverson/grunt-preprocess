@@ -33,8 +33,8 @@ exports['preprocess'] = {
     test.expect(1);
     var expected, actual;
 
-    expected = grunt.file.read('test/fixtures/test.processed.expected.html');
-    actual = grunt.file.read('test/fixtures/test.processed.html');
+    expected = grunt.file.read('test/expected/test.processed.expected.html');
+    actual = grunt.file.read('tmp/test.processed.html');
     test.equal(expected, actual, 'Files differ');
 
     test.done();
@@ -44,8 +44,8 @@ exports['preprocess'] = {
     test.expect(1);
     var expected, actual;
 
-    expected = grunt.file.read('test/fixtures/test.processed.expected.js');
-    actual = grunt.file.read('test/fixtures/test.processed.js');
+    expected = grunt.file.read('test/expected/test.processed.expected.js');
+    actual = grunt.file.read('tmp/test.processed.js');
     test.equal(expected, actual, 'Files differ');
 
     test.done();
@@ -55,11 +55,11 @@ exports['preprocess'] = {
     test.expect(2);
     var expected, actual;
 
-    expected = grunt.file.read('test/fixtures/inline-temp/test-expected.js');
-    actual = grunt.file.read('test/fixtures/inline-temp/test.js');
+    expected = grunt.file.read('tmp/test-inline-expected.js');
+    actual = grunt.file.read('tmp/inline-temp/test.js');
     test.equal(expected, actual, 'Files differ');
-    expected = grunt.file.read('test/fixtures/inline-temp/test2-expected.js');
-    actual = grunt.file.read('test/fixtures/inline-temp/test2.js');
+    expected = grunt.file.read('tmp/test2-inline-expected.js');
+    actual = grunt.file.read('tmp/inline-temp/test2.js');
     test.equal(expected, actual, 'Files differ');
 
     test.done();

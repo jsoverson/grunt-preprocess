@@ -11,30 +11,26 @@
 'use strict';
 
 module.exports = init;
-init.preprocess = preprocess;
 
-var grunt = require('grunt'),
-    path = require('path'),
-    preprocess = require('preprocess');
+var preprocess = require('preprocess');
 
-// remove when 0.4.0
-grunt.util = grunt.util || grunt.utils;
-
-var _ = grunt.util._;
 var defaultEnv = {};
 
-
 function init(grunt) {
+  var _ = grunt.util._;
 
   grunt.registerMultiTask('preprocess', 'Preprocess files based off environment configuration', function() {
 
-    var context = _.extend({},defaultEnv,process.env, this.options()), files;
+    var options = this.options();
+    var context = _.extend({}, defaultEnv,process.env, options.context || {});
+
+    var src,dest;
 
     context.NODE_ENV = context.NODE_ENV || 'development';
 
-    if (this.data.files) {
-      if (_.isArray(this.data.files) || _.isString(this.data.files)) {
-        if (!this.data.inline) {
+    this.files.forEach(function(fileObj){
+      if (!fileObj.dest) {
+        if (!options.inline) {
           grunt.log.error('WARNING : POTENTIAL CODE LOSS.'.yellow);
           grunt.log.error('You must specify "inline : true" when using the "files" configuration.');
           grunt.log.errorlns(
@@ -43,24 +39,15 @@ function init(grunt) {
           );
           return;
         }
-        files = grunt.file.expandFiles(this.data.files);
-        files.forEach(function(src) {
+        fileObj.src.forEach(function(src) {
           preprocess.preprocessFileSync(src,src,context);
         });
       } else {
-        for (var dest in this.data.files) {
-          if (!this.data.files.hasOwnProperty(dest)) continue;
-          var src = this.data.files[dest];
-          dest = grunt.template.process(dest);
-          preprocess.preprocessFileSync(src,dest,context);
-        }
+        src = fileObj.src[0];
+        dest = fileObj.dest;
+        dest = grunt.template.process(dest);
+        preprocess.preprocessFileSync(src,dest,context);
       }
-    } else {
-      var src = this.file.src[0],
-          dest = this.file.dest;
-      dest = grunt.template.process(dest);
-      preprocess.preprocessFileSync(src,dest,context);
-    }
-
+    });
   });
-};
+}
