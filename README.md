@@ -102,6 +102,8 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+ - 2.2.0 Delegating to grunt's file.read/write for consistent usage within grunt (e.g. deep writes)
+ - 2.1.0 updated preprocess dependency
  - 2.0.0 updated for grunt 0.4.0, moved context override to `context` option
  - 1.3.0 Moved logic to 'preprocess' npm module
  - 1.2.1 Added @include to include external files
