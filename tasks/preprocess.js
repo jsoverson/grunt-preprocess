@@ -10,6 +10,8 @@
 
 'use strict';
 
+var path = require('path');
+
 module.exports = init;
 
 var preprocess = require('preprocess');
@@ -23,8 +25,6 @@ function init(grunt) {
 
     var options = this.options();
     var context = _.extend({}, defaultEnv,process.env, options.context || {});
-
-    var src,dest;
 
     context.NODE_ENV = context.NODE_ENV || 'development';
 
@@ -40,14 +40,26 @@ function init(grunt) {
           return;
         }
         fileObj.src.forEach(function(src) {
-          preprocess.preprocessFileSync(src,src,context);
+          var srcText = grunt.file.read(src);
+          context.src = src;
+          context.srcDir = path.dirname(src);
+          var processed = preprocess.preprocess(srcText, context, getExtension(src));
+          grunt.file.write(src, processed);
         });
       } else {
-        src = fileObj.src[0];
-        dest = fileObj.dest;
-        dest = grunt.template.process(dest);
-        preprocess.preprocessFileSync(src,dest,context);
+        var src = fileObj.src[0];
+        var dest = grunt.template.process(fileObj.dest);
+        var srcText = grunt.file.read(src);
+        context.src = src;
+        context.srcDir = path.dirname(src);
+        var processed = preprocess.preprocess(srcText, context, getExtension(src));
+        grunt.file.write(dest, processed);
       }
     });
   });
+}
+
+function getExtension(filename) {
+  var ext = path.extname(filename||'').split('.');
+  return ext[ext.length - 1];
 }

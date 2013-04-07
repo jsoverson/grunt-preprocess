@@ -18,6 +18,10 @@ module.exports = function(grunt) {
         src : 'test/fixtures/test.js',
         dest : 'tmp/test.processed.js'
       },
+      deep : {
+        src : 'test/fixtures/test.js',
+        dest : 'tmp/deep/directory/structure/test.processed.js'
+      },
       expanded : {
         files : {
           'tmp/test-inline-expected.js' : 'test/fixtures/inline/test.js',
@@ -45,7 +49,7 @@ module.exports = function(grunt) {
       }
     },
     clean : {
-      test : ['tmp/inline-temp/*']
+      test : ['tmp']
     },
     nodeunit: {
       tests: ['test/*_test.js']
