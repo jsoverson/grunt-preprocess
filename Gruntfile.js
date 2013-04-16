@@ -65,7 +65,9 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   // Default task.
-  grunt.registerTask('default', ['jshint','clean', 'fake-env', 'copy','preprocess', 'nodeunit']);
+  grunt.registerTask('test', ['jshint','clean', 'fake-env', 'copy','preprocess', 'nodeunit']);
+
+  grunt.registerTask('default', ['test']);
 
   grunt.registerTask('fake-env', function() {
     // create a fake env var for tests
