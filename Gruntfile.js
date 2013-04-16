@@ -65,6 +65,11 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   // Default task.
-  grunt.registerTask('default', ['jshint','clean','copy','preprocess', 'nodeunit']);
+  grunt.registerTask('default', ['jshint','clean', 'fake-env', 'copy','preprocess', 'nodeunit']);
+
+  grunt.registerTask('fake-env', function() {
+    // create a fake env var for tests
+    process.env['FAKEHOME'] = '/Users/joverson';
+  });
 
 };
