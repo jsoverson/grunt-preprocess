@@ -102,6 +102,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+ - 2.3.0 Updated preprocess, changes default handling to html
  - 2.2.0 Delegating to grunt's file.read/write for consistent usage within grunt (e.g. deep writes)
  - 2.1.0 updated preprocess dependency
  - 2.0.0 updated for grunt 0.4.0, moved context override to `context` option
