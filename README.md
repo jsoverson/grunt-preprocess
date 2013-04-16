@@ -1,4 +1,4 @@
-# grunt-preprocess
+# grunt-preprocess [![Build Status](https://secure.travis-ci.org/onehealth/grunt-preprocess.png?branch=master)](http://travis-ci.org/onehealth/grunt-preprocess)
 
 Grunt task around [preprocess](https://github.com/onehealth/preprocess) npm module
 
