@@ -18,6 +18,10 @@ module.exports = function(grunt) {
         src : 'test/fixtures/test.js',
         dest : 'tmp/test.processed.js'
       },
+      coffee : {
+        src : 'test/fixtures/test.coffee',
+        dest : 'tmp/test.processed.coffee'
+      },
       deep : {
         src : 'test/fixtures/test.js',
         dest : 'tmp/deep/directory/structure/test.processed.js'
