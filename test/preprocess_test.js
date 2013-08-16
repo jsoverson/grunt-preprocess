@@ -51,6 +51,17 @@ exports['preprocess'] = {
     test.done();
 
   },
+  'preprocess coffee': function(test) {
+    test.expect(1);
+    var expected, actual;
+
+    expected = grunt.file.read('test/expected/test.processed.expected.coffee');
+    actual = grunt.file.read('tmp/test.processed.coffee');
+    test.equal(expected, actual, 'Files differ');
+
+    test.done();
+    
+  },
   'inline': function(test) {
     test.expect(2);
     var expected, actual;
