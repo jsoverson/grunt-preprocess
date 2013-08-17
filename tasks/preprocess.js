@@ -61,5 +61,7 @@ function init(grunt) {
 
 function getExtension(filename) {
   var ext = path.extname(filename||'').split('.');
+  if(ext[ext.length - 1].toLowerCase() === 'php')
+    return 'html';
   return ext[ext.length - 1];
 }

@@ -14,6 +14,15 @@ module.exports = function(grunt) {
           }
         }
       },
+      php : {
+        src : 'test/fixtures/test.php',
+        dest : 'tmp/test.processed.php',
+        options : {
+          context : {
+            customOption : 'foo'
+          }
+        }
+      },
       js : {
         src : 'test/fixtures/test.js',
         dest : 'tmp/test.processed.js'
