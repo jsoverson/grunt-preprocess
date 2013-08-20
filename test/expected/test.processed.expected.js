@@ -3,13 +3,10 @@
 define([], function () {
   "use strict";
 
-  
+  bar
+
   superExpensiveFunction()
-  
-
-  
-
   !foobar!
-
+  
 
 });

@@ -16,15 +16,18 @@ module.exports = init;
 
 var preprocess = require('preprocess');
 
-var defaultEnv = {};
-
 function init(grunt) {
   var _ = grunt.util._;
 
   grunt.registerMultiTask('preprocess', 'Preprocess files based off environment configuration', function() {
 
+    grunt.config.requires('preprocess');
+
     var options = this.options();
-    var context = _.extend({}, defaultEnv,process.env, options.context || {});
+
+    var origOptions = grunt.config('preprocess').options;
+
+    var context = _.extend({}, process.env, options.context || {}, origOptions.context || {});
 
     context.NODE_ENV = context.NODE_ENV || 'development';
 

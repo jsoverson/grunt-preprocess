@@ -3,10 +3,6 @@
 define [], ->
   "use strict"
 
-  
   superExpensiveFunction()
-  
-
-  
-
   !foobar!
+  

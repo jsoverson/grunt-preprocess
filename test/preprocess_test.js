@@ -24,6 +24,8 @@ var grunt = require('grunt');
 
 var task = require('../tasks/preprocess');
 
+var read = grunt.file.read;
+
 exports['preprocess'] = {
   setUp: function(done) {
     // setup here
@@ -33,9 +35,9 @@ exports['preprocess'] = {
     test.expect(1);
     var expected, actual;
 
-    expected = grunt.file.read('test/expected/test.processed.expected.html');
-    actual = grunt.file.read('tmp/test.processed.html');
-    test.equal(expected, actual, 'Files differ');
+    expected = 'test/expected/test.processed.expected.html';
+    actual = 'tmp/test.processed.html';
+    test.equal(read(expected), read(actual), actual + ' differs');
 
     test.done();
 
@@ -44,9 +46,9 @@ exports['preprocess'] = {
     test.expect(1);
     var expected, actual;
 
-    expected = grunt.file.read('test/expected/test.processed.expected.js');
-    actual = grunt.file.read('tmp/test.processed.js');
-    test.equal(expected, actual, 'Files differ');
+    expected = 'test/expected/test.processed.expected.js';
+    actual = 'tmp/test.processed.js';
+    test.equal(read(expected), read(actual), actual + ' differs');
 
     test.done();
 
@@ -55,9 +57,9 @@ exports['preprocess'] = {
     test.expect(1);
     var expected, actual;
 
-    expected = grunt.file.read('test/expected/test.processed.expected.coffee');
-    actual = grunt.file.read('tmp/test.processed.coffee');
-    test.equal(expected, actual, 'Files differ');
+    expected = 'test/expected/test.processed.expected.coffee';
+    actual = 'tmp/test.processed.coffee';
+    test.equal(read(expected), read(actual), actual + ' differs');
 
     test.done();
     
@@ -66,12 +68,13 @@ exports['preprocess'] = {
     test.expect(2);
     var expected, actual;
 
-    expected = grunt.file.read('tmp/test-inline-expected.js');
-    actual = grunt.file.read('tmp/inline-temp/test.js');
-    test.equal(expected, actual, 'Files differ');
-    expected = grunt.file.read('tmp/test2-inline-expected.js');
-    actual = grunt.file.read('tmp/inline-temp/test2.js');
-    test.equal(expected, actual, 'Files differ');
+    expected = 'tmp/test-inline-expected.js';
+    actual = 'tmp/inline-temp/test.js';
+    test.equal(read(expected), read(actual), actual + ' differs');
+
+    expected = 'tmp/test2-inline-expected.js';
+    actual = 'tmp/inline-temp/test2.js';
+    test.equal(read(expected), read(actual), actual + ' differs');
 
     test.done();
 

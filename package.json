@@ -2,7 +2,7 @@
   "name": "grunt-preprocess",
   "description": "Preprocess HTML and JavaScript directives based off environment configuration",
   "version": "2.3.0",
-  "homepage": "https://github.com/onehealth/grunt-preprocess",
+  "homepage": "https://github.com/jsoverson/grunt-preprocess",
   "author": {
     "name": "Jarrod Overson",
     "email": "jsoverson@gmail.com",
@@ -10,28 +10,30 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/onehealth/grunt-preprocess.git"
+    "url": "git://github.com/jsoverson/grunt-preprocess.git"
   },
   "bugs": {
-    "url": "https://github.com/onehealth/grunt-preprocess/issues"
+    "url": "https://github.com/jsoverson/grunt-preprocess/issues"
   },
   "licenses": [
     {
       "type": "Apache",
-      "url": "https://github.com/onehealth/grunt-preprocess/blob/master/LICENSE"
+      "url": "https://github.com/jsoverson/grunt-preprocess/blob/master/LICENSE"
     }
   ],
   "main": "Gruntfile.js",
   "bin": "bin/grunt-preprocess",
   "engines": {
-    "node": ">= 0.6.0"
+    "node": ">= 0.8.0"
   },
   "scripts": {
     "test": "grunt test"
   },
+  "peerDependencies": {
+    "grunt": "~0.4.0"
+  },
   "dependencies": {
-    "preprocess": "~1.3.0",
-    "grunt": "~0.4.0a"
+    "preprocess": "~2.0.0"
   },
   "devDependencies": {
     "grunt": "~0.4.0",

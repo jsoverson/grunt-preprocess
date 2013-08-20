@@ -5,6 +5,11 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     preprocess : {
+      options : {
+        context : {
+          globalOption : "bar"
+        }
+      },
       html : {
         src : 'test/fixtures/test.html',
         dest : 'tmp/test.processed.html',

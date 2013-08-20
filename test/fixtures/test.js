@@ -3,6 +3,8 @@
 define([], function () {
   "use strict";
 
+  //@echo globalOption
+
   //@exclude NODE_ENV='production'
   superExpensiveFunction()
   //@endexclude

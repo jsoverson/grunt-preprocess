@@ -102,6 +102,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+ - 3.0.0 Updated dependencies, added merge from global options context to subtask context (#13)
  - 2.3.0 Updated preprocess, changes default handling to html
  - 2.2.0 Delegating to grunt's file.read/write for consistent usage within grunt (e.g. deep writes)
  - 2.1.0 updated preprocess dependency
