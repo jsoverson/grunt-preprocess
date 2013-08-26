@@ -25,7 +25,7 @@ function init(grunt) {
 
     var options = this.options();
 
-    var origOptions = grunt.config('preprocess').options;
+    var origOptions = grunt.config('preprocess').options || {};
 
     var context = _.extend({}, process.env, options.context || {}, origOptions.context || {});
 
