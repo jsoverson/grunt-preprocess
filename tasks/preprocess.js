@@ -27,7 +27,7 @@ function init(grunt) {
 
     var origOptions = grunt.config('preprocess').options || {};
 
-    var context = _.extend({}, process.env, options.context || {}, origOptions.context || {});
+    var context = _.merge({}, process.env, origOptions.context, options.context);
 
     context.NODE_ENV = context.NODE_ENV || 'development';
 
