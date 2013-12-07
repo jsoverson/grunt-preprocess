@@ -42,6 +42,19 @@ module.exports = function(grunt) {
         options : {
           inline : true
         }
+      },
+      'context-precedence-1' : {
+        src : 'test/fixtures/context-precedence.js',
+        dest : 'tmp/context-precedence-result-1.js'
+      },
+      'context-precedence-2' : {
+        options : {
+          context : {
+            globalOption : "foo"
+          }
+        },
+        src : 'test/fixtures/context-precedence.js',
+        dest : 'tmp/context-precedence-result-2.js'
       }
     },
     jshint: {
