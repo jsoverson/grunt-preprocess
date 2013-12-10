@@ -8,7 +8,7 @@ Grunt task around [preprocess](https://github.com/onehealth/preprocess) npm modu
 <head>
   <title>Your App
 
-  <!-- @if NODE_ENV='production' -->
+  <!-- @if NODE_ENV=='production' -->
   <script src="some/production/lib/like/analytics.js"></script>
   <!-- @endif -->
 
