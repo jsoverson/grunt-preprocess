@@ -73,10 +73,13 @@ preprocess : {
     dest : 'test/test.processed.html'
   },
   multifile : {
-    files : {
-      'test/test.processed.html' : 'test/test.html',
-      'test/test.processed.js'   : 'test/test.js'
-    }
+    files : [{
+      src : 'test/test.processed.html',
+      dest : 'test/test.html'
+    }, {
+      src : 'test/test.processed.js',
+      dest : 'test/test.js'
+    }]
   },
   inline : {
     src : [ 'processed/**/*.js' ],
