@@ -78,5 +78,20 @@ exports['preprocess'] = {
 
     test.done();
 
+  },
+  'context precedence': function(test) {
+    test.expect(2);
+    var expected, actual;
+
+    expected = 'test/expected/test.context-precedence.expected-1.js';
+    actual = 'tmp/context-precedence-result-1.js';
+    test.equal(read(expected), read(actual), actual + ' differs');
+
+    expected = 'test/expected/test.context-precedence.expected-2.js';
+    actual = 'tmp/context-precedence-result-2.js';
+    test.equal(read(expected), read(actual), actual + ' differs');
+
+    test.done();
+
   }
 };
