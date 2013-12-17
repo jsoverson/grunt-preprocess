@@ -102,6 +102,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+ - 4.0.0 Switched order of context assignment, small change but necessitated major version
  - 3.0.1 Fixed issue arising from undefined options (#19)
  - 3.0.0 Updated dependencies, added merge from global options context to subtask context (#13)
  - 2.3.0 Updated preprocess, changes default handling to html
