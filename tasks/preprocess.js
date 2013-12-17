@@ -21,11 +21,11 @@ function init(grunt) {
 
   grunt.registerMultiTask('preprocess', 'Preprocess files based off environment configuration', function() {
 
-    grunt.config.requires('preprocess');
+    grunt.config.requires(this.name);
 
     var options = this.options() || {};
 
-    var origOptions = grunt.config('preprocess').options || {};
+    var origOptions = grunt.config(this.name).options || {};
 
     var context = _.extend({}, process.env, options.context || {}, origOptions.context || {});
 
