@@ -48,7 +48,7 @@ grunt.loadNpmTasks('grunt-preprocess');
 
 #### inline
 Type: `Boolean`
-Default: `undefined
+Default: `undefined`
 
 Required to enable overwriting of source files
 
