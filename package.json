@@ -1,7 +1,7 @@
 {
   "name": "grunt-preprocess",
   "description": "Preprocess HTML and JavaScript directives based off environment configuration",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "homepage": "https://github.com/jsoverson/grunt-preprocess",
   "author": {
     "name": "Jarrod Overson",
