@@ -15,7 +15,10 @@ module.exports = function(grunt) {
         dest : 'tmp/test.processed.html',
         options : {
           context : {
-            customOption : 'foo'
+            customOption : 'foo',
+            foo: function (param) {
+              return param + '-baz';
+            }
           }
         }
       },

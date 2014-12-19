@@ -33,7 +33,7 @@
     "grunt": "~0.4.0"
   },
   "dependencies": {
-    "preprocess": "~2.0.0"
+    "preprocess": "~2.1.0"
   },
   "devDependencies": {
     "grunt": "~0.4.0",
