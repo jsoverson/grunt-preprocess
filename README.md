@@ -1,4 +1,4 @@
-# grunt-preprocess [![Build Status](https://secure.travis-ci.org/jsoverson/grunt-preprocess.png?branch=master)](http://travis-ci.org/onehealth/grunt-preprocess)
+# grunt-preprocess [![Build Status](https://secure.travis-ci.org/jsoverson/grunt-preprocess.png?branch=master)](http://travis-ci.org/jsoverson/grunt-preprocess)
 
 Grunt task around [preprocess](https://github.com/jsoverson/preprocess) npm module
 
@@ -72,6 +72,10 @@ preprocess : {
     src : 'test/test.html',
     dest : 'test/test.processed.html'
   },
+  js : {
+    src : 'test/test.js',
+    dest : 'test/test.processed.js'
+  },
   multifile : {
     files : {
       'test/test.processed.html' : 'test/test.html',
@@ -87,9 +91,12 @@ preprocess : {
       }
     }
   },
-  js : {
-    src : 'test/test.js',
-    dest : 'test/test.processed.js'
+  all_from_dir: {
+    src: '**/*.tmpl',
+    ext: '.html',
+    cwd: 'src',
+    dest: 'build',
+    expand: true
   }
 }
 ```
@@ -102,6 +109,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+ - 4.2.0 bumped preprocess dep to 2.3.1, bumped dev dependencies
  - 4.1.0 bumped preprocess dep to 2.1.0
  - 4.0.0 Switched order of context assignment, small change but necessitated major version
  - 3.0.1 Fixed issue arising from undefined options (#19)
