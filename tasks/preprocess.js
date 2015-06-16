@@ -6,7 +6,6 @@
  * Written by Jarrod Overson - http://jarrodoverson.com/
  * Licensed under the Apache 2.0 license.
  */
-/*jshint node:true*/
 
 'use strict';
 
