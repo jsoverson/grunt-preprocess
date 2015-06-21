@@ -56,7 +56,7 @@ Required to enable overwriting of source files
 Type: `Object`
 Default: `{}`
 
-The additional context on top of ENV that should be passed to templates
+The additional context on top of ENV that should be passed to templates. If NODE_ENV is not set, the task sets it to `development` by default.
 
 
 ## Example Usage
