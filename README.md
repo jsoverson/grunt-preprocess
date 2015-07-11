@@ -58,6 +58,26 @@ Default: `{}`
 
 The additional context on top of ENV that should be passed to templates. If NODE_ENV is not set, the task sets it to `development` by default.
 
+#### srcDir
+Type: `String`
+Default: `<path to source file to be processed>`
+
+The directory where to look for files included via `@include` variants and `@extend`.
+
+#### srcEol
+Type: `String`
+Default: EOL of source file or `os.EOL` if source file contains multiple different or no EOLs.
+
+The end of line (EOL) character to use for the preprocessed result. May be one of:
+ - `\r\n` - Windows
+ - `\n` - Linux/OSX/Unix
+ - `\r` - legacy Mac
+
+#### type
+Type: `String`
+Default: file extension of the file to be processed 
+
+The syntax type of source file to preprocess. See [preprocess() description](https://github.com/jsoverson/preprocess#optionstype) for a list of all supported file types.
 
 ## Example Usage
 
@@ -109,6 +129,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+ - 5.0.0 bumped preprocess dep to 3.0.1, implemented backward-compatible mapping of old to new options and pass-through for new options (#34, #39, #48)
  - 4.2.0 bumped preprocess dep to 2.3.1, bumped dev dependencies
  - 4.1.0 bumped preprocess dep to 2.1.0
  - 4.0.0 Switched order of context assignment, small change but necessitated major version
