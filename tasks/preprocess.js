@@ -67,7 +67,8 @@ function init(grunt) {
 function preprocessFile(grunt, src, dest, context, options) {
   var srcText = grunt.file.read(src);
   context.src = src;
-  options.srcDir = options.srcDir || path.dirname(src);
+  // context.srcDir is for backwards-compatibility only
+  options.srcDir = context.srcDir || options.srcDir || path.dirname(src);
   options.type = options.type || getExtension(src);
   var processed = preprocess.preprocess(srcText, context, options);
   grunt.file.write(dest, processed);
