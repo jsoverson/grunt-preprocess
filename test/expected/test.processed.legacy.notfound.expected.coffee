@@ -6,5 +6,4 @@ define [], ->
   superExpensiveFunction()
 
 
-  !foobar!
-  
+tmp/include.txt not found!

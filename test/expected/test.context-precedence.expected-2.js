@@ -3,5 +3,7 @@
 define([], function () {
   "use strict";
 
+
   foo();
+
 });

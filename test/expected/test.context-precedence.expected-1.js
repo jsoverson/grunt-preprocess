@@ -4,4 +4,6 @@ define([], function () {
   "use strict";
 
   bar();
+
+
 });

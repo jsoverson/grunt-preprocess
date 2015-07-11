@@ -6,6 +6,8 @@ define([], function () {
   bar
 
   superExpensiveFunction()
+
+
   !foobar!
   
 

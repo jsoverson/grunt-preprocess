@@ -30,6 +30,29 @@ module.exports = function(grunt) {
         src : 'test/fixtures/test.coffee',
         dest : 'tmp/test.processed.coffee'
       },
+      'customext with srcDir': {
+        options: {
+          type: 'coffee',
+          srcDir: 'test/fixtures'
+        },
+        src : 'tmp/test.coffee.customext',
+        dest : 'tmp/test.processed.coffee.customext'
+      },
+      fileNotFoundSilentFail: {
+        options: {
+          type: 'coffee',
+          fileNotFoundSilentFail: true
+        },
+        src : 'tmp/test.coffee.customext',
+        dest : 'tmp/test.processed.legacy.notfound.coffee'
+      },
+      customEol: {
+        options: {
+          srcEol: '\r\n'
+        },
+        src : 'test/fixtures/test.coffee',
+        dest : 'tmp/test.processed.custom.eol.coffee'
+      },
       deep : {
         src : 'test/fixtures/test.js',
         dest : 'tmp/deep/directory/structure/test.processed.js'
@@ -69,7 +92,8 @@ module.exports = function(grunt) {
     copy : {
       test : {
         files : [
-          {src : '*', dest : 'tmp/inline-temp', expand : true, cwd : 'test/fixtures/inline/'}
+          {src : '*', dest : 'tmp/inline-temp', expand : true, cwd : 'test/fixtures/inline/'},
+          {src : "test/fixtures/test.coffee", dest: "tmp/test.coffee.customext"}
         ]
       }
     },
@@ -90,7 +114,7 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   // Default task.
-  grunt.registerTask('test', ['jshint','clean', 'fake-env', 'copy','preprocess', 'nodeunit']);
+  grunt.registerTask('test', ['jshint','clean', 'fake-env', 'copy', 'preprocess', 'nodeunit']);
 
   grunt.registerTask('default', ['test']);
 

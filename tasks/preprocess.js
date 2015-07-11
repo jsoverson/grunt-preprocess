@@ -22,17 +22,27 @@ function init(grunt) {
 
     grunt.config.requires(this.name);
 
-    var options = this.options() || {};
+    var taskOptions = _.clone(this.options() || {});
+    var globalOptions = _.clone(grunt.config(this.name).options || {});
 
-    var origOptions = grunt.config(this.name).options || {};
+    if (taskOptions.srcEol != null) {
+      taskOptions.srcEol = grunt.config.getRaw([this.name, this.target, 'options.srcEol'].join('.'));
+    }
+    if (globalOptions.srcEol != null) {
+      globalOptions.srcEol = grunt.config.getRaw(this.name + '.options.srcEol');
+    }
 
-    var context = _.merge({}, process.env, origOptions.context, options.context);
-
+    var context = _.merge({}, process.env, globalOptions.context, taskOptions.context);
     context.NODE_ENV = context.NODE_ENV || 'development';
+
+    delete taskOptions.context;
+    delete globalOptions.context;
+
+    var options = _.merge(globalOptions, taskOptions);
 
     this.files.forEach(function(fileObj){
       if (!fileObj.dest) {
-        if (!options.inline) {
+        if (!taskOptions.inline) {
           grunt.log.error('WARNING : POTENTIAL CODE LOSS.'.yellow);
           grunt.log.error('You must specify "inline : true" when using the "files" configuration.');
           grunt.log.errorlns(
@@ -42,23 +52,25 @@ function init(grunt) {
           return;
         }
         fileObj.src.forEach(function(src) {
-          var srcText = grunt.file.read(src);
-          context.src = src;
-          context.srcDir = path.dirname(src);
-          var processed = preprocess.preprocess(srcText, context, getExtension(src));
-          grunt.file.write(src, processed);
+          preprocessFile(grunt, src, src, context, options);
         });
       } else {
         var src = fileObj.src[0];
         var dest = grunt.template.process(fileObj.dest);
-        var srcText = grunt.file.read(src);
-        context.src = src;
-        context.srcDir = path.dirname(src);
-        var processed = preprocess.preprocess(srcText, context, getExtension(src));
-        grunt.file.write(dest, processed);
+
+        preprocessFile(grunt, src, dest, context, options);
       }
     });
   });
+}
+
+function preprocessFile(grunt, src, dest, context, options) {
+  var srcText = grunt.file.read(src);
+  context.src = src;
+  options.srcDir = options.srcDir || path.dirname(src);
+  options.type = options.type || getExtension(src);
+  var processed = preprocess.preprocess(srcText, context, options);
+  grunt.file.write(dest, processed);
 }
 
 function getExtension(filename) {

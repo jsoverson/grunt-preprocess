@@ -64,6 +64,39 @@ exports['preprocess'] = {
     test.done();
     
   },
+  'preprocess custom extensions and custom srcDir options': function(test) {
+    test.expect(1);
+    var expected, actual;
+
+    expected = 'test/expected/test.processed.expected.coffee';
+    actual = 'tmp/test.processed.coffee.customext';
+    test.equal(read(expected), read(actual), actual + ' differs');
+
+    test.done();
+
+  },
+  'preprocess files with fileNotFoundSilentFail option': function(test) {
+    test.expect(1);
+    var expected, actual;
+
+    expected = 'test/expected/test.processed.legacy.notfound.expected.coffee';
+    actual = 'tmp/test.processed.legacy.notfound.coffee';
+    test.equal(read(expected), read(actual), actual + ' differs');
+
+    test.done();
+
+  },
+  'preprocess files with srcEol option': function(test) {
+    test.expect(1);
+    var expected, actual;
+
+    expected = 'test/expected/test.processed.custom.eol.expected.coffee';
+    actual = 'tmp/test.processed.custom.eol.coffee';
+    test.equal(read(expected), read(actual), actual + ' differs');
+
+    test.done();
+
+  },
   'inline': function(test) {
     test.expect(2);
     var expected, actual;
