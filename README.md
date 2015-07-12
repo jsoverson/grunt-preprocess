@@ -1,4 +1,8 @@
-# grunt-preprocess [![Build Status](https://secure.travis-ci.org/jsoverson/grunt-preprocess.png?branch=master)](http://travis-ci.org/jsoverson/grunt-preprocess)
+# grunt-preprocess
+[![NPM][npm-image]][npm-url]
+
+[![Linux Build Status][linux-ci-image]][linux-ci-url] [![dependencies][deps-image]][deps-url] [![dev-dependencies][dev-deps-image]][dev-deps-url]
+
 
 Grunt task around [preprocess](https://github.com/jsoverson/preprocess) npm module
 
@@ -129,7 +133,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
- - 5.0.0 bumped preprocess dep to 3.0.1, implemented backward-compatible mapping of old to new options and pass-through for new options (#34, #39, #48)
+ - 5.0.0 bumped preprocess dep to 3.0.2, implemented backward-compatible mapping of old to new options and pass-through for new options (#34, #39, #48)
  - 4.2.0 bumped preprocess dep to 2.3.1, bumped dev dependencies
  - 4.1.0 bumped preprocess dep to 2.1.0
  - 4.0.0 Switched order of context assignment, small change but necessitated major version
@@ -154,3 +158,12 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 Written by Jarrod Overson
 
 Licensed under the Apache 2.0 license.
+
+[npm-image]: https://nodei.co/npm/grunt-preprocess.png?downloads=true
+[npm-url]: https://www.npmjs.com/package/grunt-preprocess
+[linux-ci-image]: https://img.shields.io/travis/jsoverson/grunt-preprocess/master.svg?style=flat-square
+[linux-ci-url]: https://travis-ci.org/jsoverson/grunt-preprocess
+[deps-image]: https://img.shields.io/david/jsoverson/grunt-preprocess.svg?style=flat-square
+[deps-url]: https://david-dm.org/jsoverson/grunt-preprocess
+[dev-deps-image]: https://img.shields.io/david/dev/jsoverson/grunt-preprocess.svg?style=flat-square
+[dev-deps-url]: https://david-dm.org/jsoverson/grunt-preprocess#info=devDependencies
