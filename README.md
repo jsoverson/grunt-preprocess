@@ -50,17 +50,17 @@ grunt.loadNpmTasks('grunt-preprocess');
 
 ## Options
 
+#### context
+Type: `Object`
+Default: `{NODE_ENV: 'development'}`
+
+The additional context on top of ENV that should be passed to templates. If NODE_ENV is not set, the task sets it to `development` by default.
+
 #### inline
 Type: `Boolean`
 Default: `undefined`
 
 Required to enable overwriting of source files
-
-#### context
-Type: `Object`
-Default: `{}`
-
-The additional context on top of ENV that should be passed to templates. If NODE_ENV is not set, the task sets it to `development` by default.
 
 #### srcDir
 Type: `String`
