@@ -57,6 +57,12 @@ module.exports = function(grunt) {
         src : 'test/fixtures/test.js',
         dest : 'tmp/deep/directory/structure/test.processed.js'
       },
+      multifile : {
+        files : {
+          'tmp/multifile.test.processed.js': 'test/fixtures/test.js',
+          'tmp/multifile.test.processed.coffee': 'test/fixtures/test.coffee'
+        }
+      },
       expanded : {
         files : {
           'tmp/test-inline-expected.js' : 'test/fixtures/inline/test.js',

@@ -97,6 +97,21 @@ exports['preprocess'] = {
     test.done();
 
   },
+  'preprocess multifile': function(test) {
+    test.expect(2);
+    var expected, actual;
+
+    expected = 'test/expected/test.processed.expected.js';
+    actual = 'tmp/multifile.test.processed.js';
+    test.equal(read(expected), read(actual), actual + ' differs');
+
+    expected = 'test/expected/test.processed.expected.coffee';
+    actual = 'tmp/multifile.test.processed.coffee';
+    test.equal(read(expected), read(actual), actual + ' differs');
+
+    test.done();
+
+  },
   'inline': function(test) {
     test.expect(2);
     var expected, actual;
