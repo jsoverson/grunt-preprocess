@@ -52,7 +52,12 @@ function init(grunt) {
           return;
         }
         fileObj.src.forEach(function(src) {
-          preprocessFile(grunt, src, src, context, options);
+          try {
+            preprocessFile(grunt, src, src, context, options);
+          } catch(e) {
+          	console.error('errors in %s', src);
+          	throw e;
+          }
         });
       } else {
         var src = fileObj.src[0];
