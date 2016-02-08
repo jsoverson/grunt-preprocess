@@ -52,12 +52,7 @@ function init(grunt) {
           return;
         }
         fileObj.src.forEach(function(src) {
-          try {
-            preprocessFile(grunt, src, src, context, options);
-          } catch(e) {
-          	console.error('errors in %s', src);
-          	throw e;
-          }
+          preprocessFile(grunt, src, src, context, options);
         });
       } else {
         var src = fileObj.src[0];
@@ -70,18 +65,23 @@ function init(grunt) {
 }
 
 function preprocessFile(grunt, src, dest, context, options) {
-  var srcText = grunt.file.read(src);
-  context.src = src;
+  try {
+    var srcText = grunt.file.read(src);
+    context.src = src;
 
-  // need to copy options so that any further file-specific modifications on the object
-  // are not persisted for different files
-  options = grunt.util._.clone(options);
+    // need to copy options so that any further file-specific modifications on the object
+    // are not persisted for different files
+    options = grunt.util._.clone(options);
 
-  // context.srcDir is for backwards-compatibility only
-  options.srcDir = context.srcDir || options.srcDir || path.dirname(src);
-  options.type = options.type || getExtension(src);
-  var processed = preprocess.preprocess(srcText, context, options);
-  grunt.file.write(dest, processed);
+    // context.srcDir is for backwards-compatibility only
+    options.srcDir = context.srcDir || options.srcDir || path.dirname(src);
+    options.type = options.type || getExtension(src);
+    var processed = preprocess.preprocess(srcText, context, options);
+    grunt.file.write(dest, processed);
+  } catch(e) {
+    console.error('errors in %s', src);
+    throw e;
+  }
 }
 
 function getExtension(filename) {
