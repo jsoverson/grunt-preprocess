@@ -9,6 +9,7 @@
 
 'use strict';
 
+var _ = require('lodash');
 var path = require('path');
 
 module.exports = init;
@@ -16,8 +17,6 @@ module.exports = init;
 var preprocess = require('preprocess');
 
 function init(grunt) {
-  var _ = grunt.util._;
-
   grunt.registerMultiTask('preprocess', 'Preprocess files based off environment configuration', function() {
 
     grunt.config.requires(this.name);
@@ -70,7 +69,7 @@ function preprocessFile(grunt, src, dest, context, options) {
 
   // need to copy options so that any further file-specific modifications on the object
   // are not persisted for different files
-  options = grunt.util._.clone(options);
+  options = _.clone(options);
 
   // context.srcDir is for backwards-compatibility only
   options.srcDir = context.srcDir || options.srcDir || path.dirname(src);
