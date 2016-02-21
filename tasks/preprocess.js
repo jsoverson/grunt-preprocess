@@ -78,7 +78,7 @@ function preprocessFile(grunt, src, dest, context, options) {
     var processed = preprocess.preprocess(srcText, context, options);
     grunt.file.write(dest, processed);
   } catch(e) {
-    console.error('errors in %s', src);
+    grunt.log.error('Error while preprocessing %s', src);
     throw e;
   }
 }
