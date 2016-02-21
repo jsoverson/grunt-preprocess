@@ -133,6 +133,10 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+ - 5.1.0
+    - Grunt peer dependency tagged >= 0.4.0, dependency updates
+    - added explicit dependency on lodash
+    - added logging for preprocess errors (@marcominetti, #53)
  - 5.0.1 fixed processing of mutifile-style tasks for multiple different file extensions or different containing directories (#50)
  - 5.0.0 bumped preprocess dep to 3.0.2, implemented backward-compatible mapping of old to new options and pass-through for new options (#34, #39, #48)
  - 4.2.0 bumped preprocess dep to 2.3.1, bumped dev dependencies
