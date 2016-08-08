@@ -12,7 +12,7 @@ Grunt task around [preprocess](https://github.com/jsoverson/preprocess) npm modu
 <head>
   <title>Your App</title>
 
-  <!-- @if NODE_ENV='production' -->
+  <!-- @if NODE_ENV=='production' -->
   <script src="some/production/lib/like/analytics.js"></script>
   <!-- @endif -->
 
