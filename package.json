@@ -30,18 +30,18 @@
     "test": "grunt test"
   },
   "peerDependencies": {
-    "grunt": ">=0.4.0"
+    "grunt": ">=1.0.4"
   },
   "dependencies": {
-    "lodash": "^4.5.0",
+    "lodash": "^4.17.15",
     "preprocess": "^3.0.2"
   },
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-copy": "^0.8.0",
-    "grunt-contrib-jshint": "^1.0.0",
-    "grunt-contrib-nodeunit": "^0.4.0"
+    "grunt": "^1.0.4",
+    "grunt-contrib-clean": "^2.0.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^2.1.0",
+    "grunt-contrib-nodeunit": "^2.0.0"
   },
   "keywords": [
     "gruntplugin",
